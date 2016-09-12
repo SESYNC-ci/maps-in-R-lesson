@@ -1,0 +1,7 @@
+# R
+*.Rproj
+.Rhistory
+.Rproj.user
+
+# symlink to data
+_slides/data
