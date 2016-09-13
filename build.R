@@ -7,7 +7,7 @@ render_markdown(fence_char = "~")
 opts_knit$set(base.url = paste0(config$baseurl, "/"))
 opts_chunk$set(
     comment = NA,
-    fig.path = "images/",
+    fig.path = "../images/",
     block_ial = c("{:.input}", "{:.output}"))
 
 current_chunk = knit_hooks$get("chunk")
