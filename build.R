@@ -14,7 +14,7 @@ current_chunk = knit_hooks$get("chunk")
 chunk = function(x, options) {
     x <- current_chunk(x, options)
     if (!is.null(options$title)) {
-        x <- gsub("~~~(\n*$)",
+        x <- gsub("~~~(\n*(!\\[.+)?$)",
                   paste0("~~~\n{:.text-document title=\"", options$title, "\"}\\1"),
                   x)
         return(x)

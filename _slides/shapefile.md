@@ -16,13 +16,6 @@ shapefile available on the [US census website](https://www.census.gov/geo/maps-d
 library(rgdal)
 counties_md <- readOGR("data/cb_500k_maryland", "cb_500k_maryland")
 ~~~
-
-~~~
-OGR data source with driver: ESRI Shapefile 
-Source: "data/cb_500k_maryland", layer: "cb_500k_maryland"
-with 24 features
-It has 9 fields
-~~~
 {:.text-document title="lesson-7-1.R"}
 
 Note that the first argument to `readOGR` is the path of the shapefile 

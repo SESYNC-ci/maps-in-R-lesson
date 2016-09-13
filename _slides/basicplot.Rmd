@@ -5,7 +5,7 @@
 
 To display the spatial features (points, lines or polygons) in a *Spatial* object, you can simply use the `plot` function.
 
-```{r shp_plot}
+```{r shp_plot, title = "lesson-7-1.R"}
 plot(counties_md)
 ```
 
@@ -15,13 +15,10 @@ To show how multiple spatial layers can be superposed in the same plot,
 we will create a new *SpatialPolygonsDataFrame* with a single county selected
 by name. Note that we can subset `counties_md` just like a regular data frame.
 
-```{r sp_subset, title = "lesson-7-1.R"}
-howard <- counties_md[counties_md[["NAME"]] == "Howard", ]
-```
-
 To add a new layer to an existing plot, use the `add = TRUE` argument.
 
-```{r plot_add}
+```{r plot_add, title = "lesson-7-1.R"}
+howard <- counties_md[counties_md[["NAME"]] == "Howard", ]
 plot(counties_md)
 plot(howard, col = "red", add = TRUE)
 ```
@@ -32,7 +29,7 @@ Other base R functions, such as `text`, always add elements to an existing plot.
 In the code below, note that calling `coordinates` on a polygon object returns
 the center point of each polygon.
 
-```{r plot_text}
+```{r plot_text, title = "lesson-7-1.R"}
 plot(counties_md)
 plot(howard, col = "red", add = TRUE)
 text(coordinates(counties_md), labels = counties_md[["NAME"]],

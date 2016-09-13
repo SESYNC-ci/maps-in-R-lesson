@@ -9,6 +9,7 @@ To display the spatial features (points, lines or polygons) in a *Spatial* objec
 ~~~r
 plot(counties_md)
 ~~~
+{:.text-document title="lesson-7-1.R"}
 
 ![plot of chunk shp_plot](/maps-in-R-lesson/images/shp_plot-1.png)
 
@@ -18,19 +19,15 @@ To show how multiple spatial layers can be superposed in the same plot,
 we will create a new *SpatialPolygonsDataFrame* with a single county selected
 by name. Note that we can subset `counties_md` just like a regular data frame.
 
-
-~~~r
-howard <- counties_md[counties_md[["NAME"]] == "Howard", ]
-~~~
-{:.text-document title="lesson-7-1.R"}
-
 To add a new layer to an existing plot, use the `add = TRUE` argument.
 
 
 ~~~r
+howard <- counties_md[counties_md[["NAME"]] == "Howard", ]
 plot(counties_md)
 plot(howard, col = "red", add = TRUE)
 ~~~
+{:.text-document title="lesson-7-1.R"}
 
 ![plot of chunk plot_add](/maps-in-R-lesson/images/plot_add-1.png)
 
@@ -47,6 +44,7 @@ plot(howard, col = "red", add = TRUE)
 text(coordinates(counties_md), labels = counties_md[["NAME"]],
      cex = 0.7)
 ~~~
+{:.text-document title="lesson-7-1.R"}
 
 ![plot of chunk plot_text](/maps-in-R-lesson/images/plot_text-1.png)
 
