@@ -11,7 +11,7 @@ Here, we read a shapefile corresponding to county boundaries for the state
 of Maryland. This data was extracted from the full county boundaries
 shapefile available on the [US census website](https://www.census.gov/geo/maps-data/data/cbf/cbf_counties.html).
 
-```{r load_shp, results = "hide", title = "lesson-7-1.R"}
+```{r load_shp, results = "hide", message = FALSE, title = "lesson-7-1.R"}
 library(rgdal)
 counties_md <- readOGR("data/cb_500k_maryland", "cb_500k_maryland")
 ```

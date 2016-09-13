@@ -7,7 +7,7 @@ render_markdown(fence_char = "~")
 opts_knit$set(base.url = paste0(config$baseurl, "/"))
 opts_chunk$set(
     comment = NA,
-    fig.path = "../images/",
+    fig.path = "images/",
     block_ial = c("{:.input}", "{:.output}"))
 
 current_chunk = knit_hooks$get("chunk")
@@ -34,11 +34,7 @@ chunk = function(x, options) {
 }
 knit_hooks$set(chunk = chunk)
 
-oldwd <- getwd()
-setwd("_slides")
-
 for (f in config$slide_sorter) {
-    knit(paste0(f, ".Rmd"))
+    knit(input = paste0("_slides/", f, ".Rmd"), 
+         output = paste0("_slides/", f, ".md"))
 }
-
-setwd(oldwd)

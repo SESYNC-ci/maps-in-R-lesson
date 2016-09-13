@@ -11,7 +11,7 @@ plot(counties_md)
 ~~~
 {:.text-document title="lesson-7-1.R"}
 
-![plot of chunk shp_plot](/maps-in-R-lesson/../images/shp_plot-1.png)
+![plot of chunk shp_plot](/maps-in-R-lesson/images/shp_plot-1.png)
 
 <!--split-->
 
@@ -29,7 +29,7 @@ plot(howard, col = "red", add = TRUE)
 ~~~
 {:.text-document title="lesson-7-1.R"}
 
-![plot of chunk plot_add](/maps-in-R-lesson/../images/plot_add-1.png)
+![plot of chunk plot_add](/maps-in-R-lesson/images/plot_add-1.png)
 
 <!--split-->
 
@@ -46,7 +46,7 @@ text(coordinates(counties_md), labels = counties_md[["NAME"]],
 ~~~
 {:.text-document title="lesson-7-1.R"}
 
-![plot of chunk plot_text](/maps-in-R-lesson/../images/plot_text-1.png)
+![plot of chunk plot_text](/maps-in-R-lesson/images/plot_text-1.png)
 
 <!--split-->
 
