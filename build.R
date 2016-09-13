@@ -34,8 +34,11 @@ chunk = function(x, options) {
 }
 knit_hooks$set(chunk = chunk)
 
+oldwd <- getwd()
 setwd("_slides")
 
 for (f in config$slide_sorter) {
     knit(paste0(f, ".Rmd"))
 }
+
+setwd(oldwd)
