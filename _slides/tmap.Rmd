@@ -35,7 +35,9 @@ map1 <- tm_shape(counties_proj) +
             tm_text("NAME", size = 0.7)
 ```
 
-```{r tmap_show}
+<!--split-->
+
+```{r tmap_show, title = "lesson-7-1.R"}
 map1
 ```
 
