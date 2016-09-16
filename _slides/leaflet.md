@@ -22,7 +22,7 @@ imap
 ~~~
 {:.text-document title="lesson-7-1.R"}
 
-![leaflet1](images/leaflet1.png)
+![leaflet1]({{ site.baseurl }}/images/leaflet1.png)
 
 <!--split-->
 

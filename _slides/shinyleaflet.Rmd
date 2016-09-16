@@ -128,6 +128,6 @@ You can now run the app and try the layer controls.
 
 <!--split-->
 
-![leaflet_shiny](images/leafletshiny.png)
+![leaflet_shiny]({{ site.baseurl }}/images/leafletshiny.png)
 
 In addition to these controls embedded in the map, it is possible to modify a map based on other input objects in the Shiny app. See the [SuperZip app](http://shiny.rstudio.com/gallery/superzip-example.html) in the Shiny gallery for a full example.

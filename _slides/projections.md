@@ -9,14 +9,14 @@ In order for two spatial objects to be comparable, they must be represented in t
 
 A **geographic coordinate system** (GCS) represents each point on Earth by two angular coordinates, a longitude and a latitude. In effect, it approximates the irregular "sea level" surface of the Earth (the geoid) by an ellipsoid (a sphere flattened at the poles). The specification of this ellipsoid, or *datum*, has changed over times; current global maps are generally based on the WGS 84 datum, but other systems are in use for older or regional maps. 
 
-![Geoid approximation](images/spheroid.png)
+![Geoid approximation]({{ site.baseurl }}/images/spheroid.png)
 
 <!--split-->
 
 A **projected coordinated system** associates angular coordinates to points on a plane, in order to produce two-dimensional maps. No such projection can faithfully reproduce the three-dimensional relationship between any set of points on the globe. For example, 
 the Mercator projection (left) preserves angles, which is useful for navigation, but it greatly inflates areas at the poles. The Lambert equal-area projection (right) preserves areas at the cost of shape distortion away from its center.
 
-![Projections](images/proj.png)
+![Projections]({{ site.baseurl }}/images/proj.png)
 
 [Source](http://www.perrygeo.com/tissot-indicatrix-examining-the-distortion-of-map-projections.html)
 
@@ -49,9 +49,11 @@ proj4string(nlcd)
 ~~~
 {:.output}
 
-Question: Why is the equal-area projection useful for a land cover dataset?
+Question
+: Why is the equal-area projection useful for a land cover dataset?
 
-Answer: {:.fragment} Because each cell has the same area, the proportion of cells with a given land cover class is a good estimate of the fraction of total land area covered by that class
+Answer
+: {:.fragment} Because each cell has the same area, the proportion of cells with a given land cover class is a good estimate of the fraction of total land area covered by that class
 
 <!--split-->
 

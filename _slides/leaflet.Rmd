@@ -20,7 +20,7 @@ imap <- leaflet() %>%
 imap
 ```
 
-![leaflet1](images/leaflet1.png)
+![leaflet1]({{ site.baseurl }}/images/leaflet1.png)
 
 <!--split-->
 
