@@ -13,7 +13,8 @@ shapefile available on the [US census website](https://www.census.gov/geo/maps-d
 
 ```{r load_shp, results = "hide", message = FALSE, title = "lesson-7-1.R"}
 library(rgdal)
-counties_md <- readOGR("data/cb_500k_maryland", "cb_500k_maryland")
+counties_md <- readOGR("data/cb_500k_maryland", 
+                       "cb_500k_maryland")
 ```
 
 Note that the first argument to `readOGR` is the path of the shapefile 

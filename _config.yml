@@ -16,6 +16,12 @@ slide_sorter:
   - intro
   - shapefile
   - basicplot
+  - raster
+  - projections
+  - mask
+  - tmap
+  - leaflet
+  - shinyleaflet
 
 
 # Jekyll

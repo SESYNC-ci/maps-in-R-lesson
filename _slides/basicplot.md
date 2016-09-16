@@ -41,7 +41,8 @@ the center point of each polygon.
 ~~~r
 plot(counties_md)
 plot(howard, col = "red", add = TRUE)
-text(coordinates(counties_md), labels = counties_md[["NAME"]],
+text(coordinates(counties_md), 
+     labels = counties_md[["NAME"]],
      cex = 0.7)
 ~~~
 {:.text-document title="lesson-7-1.R"}

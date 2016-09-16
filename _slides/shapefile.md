@@ -14,7 +14,8 @@ shapefile available on the [US census website](https://www.census.gov/geo/maps-d
 
 ~~~r
 library(rgdal)
-counties_md <- readOGR("data/cb_500k_maryland", "cb_500k_maryland")
+counties_md <- readOGR("data/cb_500k_maryland", 
+                       "cb_500k_maryland")
 ~~~
 {:.text-document title="lesson-7-1.R"}
 
