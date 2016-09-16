@@ -45,10 +45,13 @@ map1 <- tm_shape(counties_proj) +
 ~~~
 {:.text-document title="lesson-7-1.R"}
 
+<!--split-->
+
 
 ~~~r
 map1
 ~~~
+{:.text-document title="lesson-7-1.R"}
 
 ![plot of chunk tmap_show](/maps-in-R-lesson/images/tmap_show-1.png)
 
