@@ -48,7 +48,11 @@ attr_table <- nlcd@data@attributes[[1]]
 ~~~
 {:.text-document title="lesson-7-1.R"}
 
-Each land cover category has a distinct color specified by the "Red", "Green" and "Blue" columns. We can visualize the whole raster with `plot`.
+Each land cover category has a distinct color specified by the "Red", "Green" and "Blue" columns. 
+
+<!--split-->
+
+We can visualize the whole raster with `plot`.
 
 ~~~r
 plot(nlcd)

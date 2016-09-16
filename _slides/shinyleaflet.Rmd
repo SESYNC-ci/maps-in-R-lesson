@@ -64,6 +64,8 @@ We then add the county outlines with `addPolygons` and the land cover informatio
                        project = FALSE)
 ```
 
+<!--split-->
+
 Here is the complete server function. You are now ready to run the app. 
 
 ```{r leaflet_server_full, title = "lesson-7-2.R", eval = FALSE}

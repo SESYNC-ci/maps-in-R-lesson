@@ -9,8 +9,6 @@ The *leaflet* package is a R interface to the leaflet JavaScript library. It pro
 
 The `leaflet()` function creates an empty leaflet map to which layers can be added using the pipe (`%>%`) operator. The `addTiles` functions adds a base tiled map; by default, it imports tiles from OpenStreetMap. We center and zoom the map with `setView`. 
 
-Switch to the "Viewer" tab in RStudio to see the result.
-
 
 ~~~r
 library(leaflet)
@@ -21,6 +19,10 @@ imap <- leaflet() %>%
 imap
 ~~~
 {:.text-document title="lesson-7-1.R"}
+
+<!--split-->
+
+Switch to the "Viewer" tab in RStudio to see the result.
 
 ![leaflet1]({{ site.baseurl }}/images/leaflet1.png)
 

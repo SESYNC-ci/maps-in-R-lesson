@@ -5,6 +5,8 @@
 
 To conclude this presentation of rasters, we introduce the `mask` function. Masking a raster means removing some of its data (i.e. setting it to *NA*) based on a logical condition. 
 
+<!--split-->
+
 For example, the masking layer `nlcd == 81` returns `TRUE` for cells with land cover class 81 (pasture) and `FALSE` otherwise.  With the setting `maskvalue = FALSE`, the code chunk below masks any non-pasture cells and plots the resulting raster.
 ```{r mask, fig.keep="last", title = "lesson-7-1.R"}
 pasture <- mask(nlcd, nlcd == 81, maskvalue = FALSE)

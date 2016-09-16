@@ -1,7 +1,7 @@
 ---
 ---
 
-## Adding data to maps with tmap
+## Adding data to maps
 
 The *tmap* ("thematic map") package simplifies map-based visualization of data attributes associated with a given shapefile. Its logic and syntax are particularly easy to learn for those users already familiar with the popular graphics package *ggplot2*.
 
@@ -42,11 +42,15 @@ map1 <- tm_shape(counties_proj) +
             tm_borders() +
             tm_fill("AWATER", title = "Water Area (sq. m)") +
             tm_text("NAME", size = 0.7)
-map1
 ~~~
 {:.text-document title="lesson-7-1.R"}
 
-![plot of chunk tmap_layer](/maps-in-R-lesson/images/tmap_layer-1.png)
+
+~~~r
+map1
+~~~
+
+![plot of chunk tmap_show](/maps-in-R-lesson/images/tmap_show-1.png)
 
 <!--split-->
 

@@ -74,6 +74,8 @@ We then add the county outlines with `addPolygons` and the land cover informatio
 ~~~
 {:.text-document title="lesson-7-2.R"}
 
+<!--split-->
+
 Here is the complete server function. You are now ready to run the app. 
 
 

@@ -27,7 +27,11 @@ The values in raster cells range from 0 to 255, yet land cover is a categorical 
 attr_table <- nlcd@data@attributes[[1]]
 ```
 
-Each land cover category has a distinct color specified by the "Red", "Green" and "Blue" columns. We can visualize the whole raster with `plot`.
+Each land cover category has a distinct color specified by the "Red", "Green" and "Blue" columns. 
+
+<!--split-->
+
+We can visualize the whole raster with `plot`.
 ```{r raster_plot, title = "lesson-7-1.R", fig.keep="last"}
 plot(nlcd)
 ```
