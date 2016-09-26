@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Maps in R</title>
+  <meta name="description" content="">
+
+  
+  <link rel="stylesheet" href="https://rawgit.com/sesync-ci/lesson-stylesheets/master/css/lesson.css">
+  
+  
+</head>
+
+
+  <body>
+
+    <div class="page-content">
+      <div class="wrapper">
+        
+<p><a name="/slides/title"></a></p>
+
+<h1 id="maps-in-r">Maps in R</h1>
+
+<p>Lesson 7 with <em>Philippe Marchand</em></p>
+
+<p class="ToS"><a href="#/slides/title">Top of Section</a></p>
+
+<hr />
+
+<p><a name="/slides/intro"></a></p>
+
+<p>Over time, the R community has produced a collection of spatial analysis and visualization packages, giving current R users the ability to implement various tasks that previously required to specialized Geographic Information System (GIS) software.</p>
+
+<p>This lesson provides a quick tour of popular tools available to read and display spatial data in R. These can be useful whether you want to quickly explore a dataset or to produce high-quality maps for print and web publications. Like for other types of figures, building maps with scripts can take some time at first, but that investment will quickly pay off in terms of reproducibility and re-use value.</p>
+
+<!--split-->
+
+<h3 id="spatial-data-types">Spatial data types</h3>
+
+<p>All types of spatial data belong in one of two main categories: 
+<em>vectors</em> (points, lines and polygons) or <em>rasters</em> (grids of pixels).</p>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Raster</th>
+      <th>Vector</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>matrix</td>
+      <td>table</td>
+    </tr>
+    <tr>
+      <td>surface</td>
+      <td>shape</td>
+    </tr>
+    <tr>
+      <td>pixels</td>
+      <td>features</td>
+    </tr>
+    <tr>
+      <td>bands</td>
+      <td>attributes</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Some raster file formats: GeoTIFF, netCDF</p>
+
+<p>Some vector file formats: shapefiles, WKT, GeoJSON</p>
+
+<p class="ToS"><a href="#/slides/intro">Top of Section</a></p>
+
+<hr />
+
+<p><a name="/slides/shapefile"></a></p>
+
+<h2 id="reading-shapefiles-into-r">Reading shapefiles into R</h2>
+
+<p>Vector data in shapefiles can be read via the <code class="highlighter-rouge">readOGR</code> function in <code class="highlighter-rouge">rgdal</code>,
+which is a package linking R to the open source Geospatial Data Abstraction 
+Library (GDAL).</p>
+
+<p>Here, we read a shapefile corresponding to county boundaries for the state 
+of Maryland. This data was extracted from the full county boundaries
+shapefile available on the <a href="https://www.census.gov/geo/maps-data/data/cbf/cbf_counties.html">US census website</a>.</p>
+
+<div class="language-r text-document highlighter-rouge" title="lesson-7-1.R"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">rgdal</span><span class="p">)</span>
+<span class="n">counties_md</span> <span class="o">&lt;-</span> <span class="n">readOGR</span><span class="p">(</span><span class="s2">"data/cb_500k_maryland"</span><span class="p">,</span> 
+                       <span class="s2">"cb_500k_maryland"</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>Note that the first argument to <code class="highlighter-rouge">readOGR</code> is the path of the shapefile 
+whereas the second argument is the layer name; for simple shapefiles, it is
+usually identical to the file name.</p>
+
+<!--split-->
+
+<p>The shapefile is read as a <em>SpatialPolygonsDataFrame</em> object, which contains
+both a list of 24 county (multi)polygons (<code class="highlighter-rouge">counties_md@polygons</code>), as well as a
+data frame (<code class="highlighter-rouge">counties_md@data</code>) where each row stores the attributes of the
+corresponding county.</p>
+
+<div class="language-r input highlighter-rouge"><pre class="highlight"><code><span class="n">summary</span><span class="p">(</span><span class="n">counties_md</span><span class="p">)</span>
+</code></pre>
+</div>
+<div class="output highlighter-rouge"><pre class="highlight"><code>Object of class SpatialPolygonsDataFrame
+Coordinates:
+        min       max
+x -79.48765 -75.04894
+y  37.91172  39.72304
+Is projected: FALSE 
+proj4string :
+[+proj=longlat +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0]
+Data attributes:
+ STATEFP    COUNTYFP      COUNTYNS            AFFGEOID      GEOID   
+ 24:24   001    : 1   00592947: 1   0500000US24001: 1   24001  : 1  
+         003    : 1   00593907: 1   0500000US24003: 1   24003  : 1  
+         005    : 1   00595737: 1   0500000US24005: 1   24005  : 1  
+         009    : 1   00596089: 1   0500000US24009: 1   24009  : 1  
+         011    : 1   00596115: 1   0500000US24011: 1   24011  : 1  
+         013    : 1   00596495: 1   0500000US24013: 1   24013  : 1  
+         (Other):18   (Other) :18   (Other)       :18   (Other):18  
+           NAME    LSAD        ALAND               AWATER         
+ Baltimore   : 2   06:23   Min.   :2.096e+08   Min.   :6.346e+06  
+ Allegany    : 1   25: 1   1st Qu.:8.279e+08   1st Qu.:2.414e+07  
+ Anne Arundel: 1           Median :1.087e+09   Median :2.007e+08  
+ Calvert     : 1           Mean   :1.048e+09   Mean   :2.910e+08  
+ Caroline    : 1           3rd Qu.:1.222e+09   3rd Qu.:4.558e+08  
+ Carroll     : 1           Max.   :1.711e+09   Max.   :1.145e+09  
+ (Other)     :17                                                  
+</code></pre>
+</div>
+
+<p class="ToS"><a href="#/slides/shapefile">Top of Section</a></p>
+
+<hr />
+
+<p><a name="/slides/basicplot"></a></p>
+
+<h2 id="basic-spatial-plots">Basic spatial plots</h2>
+
+<p>To display the spatial features (points, lines or polygons) in a <em>Spatial</em> object, you can simply use the <code class="highlighter-rouge">plot</code> function.</p>
+
+<div class="language-r text-document highlighter-rouge" title="lesson-7-1.R"><pre class="highlight"><code><span class="n">plot</span><span class="p">(</span><span class="n">counties_md</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p><img src="/maps-in-R-lesson/images/shp_plot-1.png" alt="plot of chunk shp_plot" /></p>
+
+<!--split-->
+
+<p>To show how multiple spatial layers can be superposed in the same plot,
+we will create a new <em>SpatialPolygonsDataFrame</em> with a single county selected
+by name. Note that we can subset <code class="highlighter-rouge">counties_md</code> just like a regular data frame.</p>
+
+<p>To add a new layer to an existing plot, use the <code class="highlighter-rouge">add = TRUE</code> argument.</p>
+
+<div class="language-r text-document highlighter-rouge" title="lesson-7-1.R"><pre class="highlight"><code><span class="n">howard</span> <span class="o">&lt;-</span> <span class="n">counties_md</span><span class="p">[</span><span class="n">counties_md</span><span class="p">[[</span><span class="s2">"NAME"</span><span class="p">]]</span> <span class="o">==</span> <span class="s2">"Howard"</span><span class="p">,</span> <span class="p">]</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">counties_md</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">howard</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="s2">"red"</span><span class="p">,</span> <span class="n">add</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p><img src="/maps-in-R-lesson/images/plot_add-1.png" alt="plot of chunk plot_add" /></p>
+
+<!--split-->
+
+<p>Other base R functions, such as <code class="highlighter-rouge">text</code>, always add elements to an existing plot.
+In the code below, note that calling <code class="highlighter-rouge">coordinates</code> on a polygon object returns
+the center point of each polygon.</p>
+
+<div class="language-r text-document highlighter-rouge" title="lesson-7-1.R"><pre class="highlight"><code><span class="n">plot</span><span class="p">(</span><span class="n">counties_md</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">howard</span><span class="p">,</span> <span class="n">col</span> <span class="o">=</span> <span class="s2">"red"</span><span class="p">,</span> <span class="n">add</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span>
+<span class="n">text</span><span class="p">(</span><span class="n">coordinates</span><span class="p">(</span><span class="n">counties_md</span><span class="p">),</span> 
+     <span class="n">labels</span> <span class="o">=</span> <span class="n">counties_md</span><span class="p">[[</span><span class="s2">"NAME"</span><span class="p">]],</span>
+     <span class="n">cex</span> <span class="o">=</span> <span class="m">0.7</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p><img src="/maps-in-R-lesson/images/plot_text-1.png" alt="plot of chunk plot_text" /></p>
+
+<!--split-->
+
+<h3 id="exercise">Exercise</h3>
+
+<p>Starting from a fresh map, print numbers on each county in order of the smallest
+(1) to largest (24) in land area (“ALAND” attribute). 
+<em>Hint</em>: Use <code class="highlighter-rouge">rank(x)</code> to get ranks from a numeric vector x.</p>
+
+<p class="ToS"><a href="#/slides/basicplot">Top of Section</a></p>
+
+<hr />
+
+<p><a name="/slides/raster"></a></p>
+
+<h2 id="reading-rasters-into-r">Reading rasters into R</h2>
+
+<p>While vector spatial layers are composed of geometrical objects defined by their vertices, raster layers are grids of pixels with attached values.</p>
+
+<p>We start by loading the <strong>raster</strong> package in R and importing a raster file with the eponymous <code class="highlighter-rouge">raster</code> function. This file is a portion of the <a href="http://www.mrlc.gov/nlcd2011.php">National Land Cover Database</a>, which we already cropped and reduced to a lower resolution in order to speed up processing time for this tutorial.</p>
+
+<div class="language-r text-document highlighter-rouge" title="lesson-7-1.R"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">raster</span><span class="p">)</span>
+<span class="n">nlcd</span> <span class="o">&lt;-</span> <span class="n">raster</span><span class="p">(</span><span class="s2">"data/nlcd_agg.grd"</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<!--split-->
+
+<p>A raster is fundamentally a data matrix with associated spatial properties (e.g. extent, resolution and projection) that allow its values to be mapped onto geographical space. You can view these key properties – the raster’s metadata – by typing the object name in the console.</p>
+
+<div class="language-r input highlighter-rouge"><pre class="highlight"><code><span class="n">nlcd</span>
+</code></pre>
+</div>
+<div class="output highlighter-rouge"><pre class="highlight"><code>class       : RasterLayer 
+dimensions  : 2514, 3004, 7552056  (nrow, ncol, ncell)
+resolution  : 150, 150  (x, y)
+extent      : 1394535, 1845135, 1724415, 2101515  (xmin, xmax, ymin, ymax)
+coord. ref. : +proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
+data source : /nfs/pmarchand-data/Training/maps-in-R-lesson/_slides/data/nlcd_agg.grd 
+names       : nlcd_2011_landcover_2011_edition_2014_03_31 
+values      : 0, 95  (min, max)
+attributes  :
+        ID      COUNT Red Green Blue Land.Cover.Class Opacity
+ from:   0 7854240512   0     0    0     Unclassified       1
+ to  : 255          0   0     0    0                        0
+</code></pre>
+</div>
+
+<!--split-->
+
+<p>The values in raster cells range from 0 to 255, yet land cover is a categorical variable. The mapping of numbers to categories can be found in the raster’s attribute table:</p>
+
+<div class="language-r text-document highlighter-rouge" title="lesson-7-1.R"><pre class="highlight"><code><span class="n">attr_table</span> <span class="o">&lt;-</span> <span class="n">nlcd</span><span class="o">@</span><span class="n">data</span><span class="o">@</span><span class="n">attributes</span><span class="p">[[</span><span class="m">1</span><span class="p">]]</span>
+</code></pre>
+</div>
+
+<p>Each land cover category has a distinct color specified by the “Red”, “Green” and “Blue” columns.</p>
+
+<!--split-->
+
+<p>We can visualize the whole raster with <code class="highlighter-rouge">plot</code>.</p>
+
+<div class="language-r text-document highlighter-rouge" title="lesson-7-1.R"><pre class="highlight"><code><span class="n">plot</span><span class="p">(</span><span class="n">nlcd</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p><img src="/maps-in-R-lesson/images/raster_plot-1.png" alt="plot of chunk raster_plot" /></p>
+
+<!--split-->
+
+<p>At this point, we might want to superpose the county boundaries on top of the raster image. However, the following instruction does not show the county polygons. Why not?</p>
+
+<div class="language-r input highlighter-rouge"><pre class="highlight"><code><span class="n">plot</span><span class="p">(</span><span class="n">counties_md</span><span class="p">,</span> <span class="n">add</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p class="ToS"><a href="#/slides/raster">Top of Section</a></p>
+
+<hr />
+
+<p><a name="/slides/projections"></a></p>
+
+<h2 id="reading-and-changing-projections">Reading and changing projections</h2>
+
+<p>In order for two spatial objects to be comparable, they must be represented in the same coordinate reference system. This can be a geographic coordinate system or a projected coordinate system.</p>
+
+<!--split-->
+
+<p>A <strong>geographic coordinate system</strong> (GCS) represents each point on Earth by two angular coordinates, a longitude and a latitude. In effect, it approximates the irregular “sea level” surface of the Earth (the geoid) by an ellipsoid (a sphere flattened at the poles). The specification of this ellipsoid, or <em>datum</em>, has changed over times; current global maps are generally based on the WGS 84 datum, but other systems are in use for older or regional maps.</p>
+
+<p><img src="/maps-in-R-lesson/images/spheroid.png" alt="Geoid approximation" /></p>
+
+<!--split-->
+
+<p>A <strong>projected coordinated system</strong> associates angular coordinates to points on a plane, in order to produce two-dimensional maps. No such projection can faithfully reproduce the three-dimensional relationship between any set of points on the globe. For example, 
+the Mercator projection (left) preserves angles, which is useful for navigation, but it greatly inflates areas at the poles. The Lambert equal-area projection (right) preserves areas at the cost of shape distortion away from its center.</p>
+
+<p><img src="/maps-in-R-lesson/images/proj.png" alt="Projections" /></p>
+
+<p><a href="http://www.perrygeo.com/tissot-indicatrix-examining-the-distortion-of-map-projections.html">Source</a></p>
+
+<p>Web-based tiled map services like Google Maps use a simplified, less accurate Mercator projection (Web Mercator) to optimize rendering speed.</p>
+
+<!--split-->
+
+<h3 id="projection-in-r">Projection in R</h3>
+
+<p>Coordinate systems in R are described in a standard PROJ.4 string format.</p>
+
+<p>The <code class="highlighter-rouge">counties_md</code> polygons layer uses a geographic coordinate system (“+proj=longlat”) based on the <em>NAD83</em> datum, whereas the <code class="highlighter-rouge">nlcd</code> has an Albers equal-area projection (“+proj=aea”).</p>
+
+<div class="language-r input highlighter-rouge"><pre class="highlight"><code><span class="n">proj4string</span><span class="p">(</span><span class="n">counties_md</span><span class="p">)</span>
+</code></pre>
+</div>
+<div class="output highlighter-rouge"><pre class="highlight"><code>[1] "+proj=longlat +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0"
+</code></pre>
+</div>
+
+<div class="language-r input highlighter-rouge"><pre class="highlight"><code><span class="n">proj4string</span><span class="p">(</span><span class="n">nlcd</span><span class="p">)</span>
+</code></pre>
+</div>
+<div class="output highlighter-rouge"><pre class="highlight"><code>[1] "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"
+</code></pre>
+</div>
+
+<dl>
+  <dt>Question</dt>
+  <dd>Why is the equal-area projection useful for a land cover dataset?</dd>
+  <dt>Answer</dt>
+  <dd class="fragment">Because each cell has the same area, the proportion of cells with a given land cover class is a good estimate of the fraction of total land area covered by that class</dd>
+</dl>
+
+<!--split-->
+
+<p>Returning to our original problem, we can superpose the two layers by first converting <code class="highlighter-rouge">counties_md</code> to the same projection as <code class="highlighter-rouge">nlcd</code>. The <code class="highlighter-rouge">spTransform</code> function performs this
+operation.</p>
+
+<div class="language-r text-document highlighter-rouge" title="lesson-7-1.R"><pre class="highlight"><code><span class="n">counties_proj</span> <span class="o">&lt;-</span> <span class="n">spTransform</span><span class="p">(</span><span class="n">counties_md</span><span class="p">,</span> 
+                             <span class="n">proj4string</span><span class="p">(</span><span class="n">nlcd</span><span class="p">))</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">nlcd</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">counties_proj</span><span class="p">,</span> <span class="n">add</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p><img src="/maps-in-R-lesson/images/sptransform-1.png" alt="plot of chunk sptransform" /></p>
+
+<p class="ToS"><a href="#/slides/projections">Top of Section</a></p>
+
+<hr />
+
+<p><a name="/slides/mask"></a></p>
+
+<h2 id="masking-a-raster">Masking a raster</h2>
+
+<p>To conclude this presentation of rasters, we introduce the <code class="highlighter-rouge">mask</code> function. Masking a raster means removing some of its data (i.e. setting it to <em>NA</em>) based on a logical condition.</p>
+
+<!--split-->
+
+<p>For example, the masking layer <code class="highlighter-rouge">nlcd == 81</code> returns <code class="highlighter-rouge">TRUE</code> for cells with land cover class 81 (pasture) and <code class="highlighter-rouge">FALSE</code> otherwise.  With the setting <code class="highlighter-rouge">maskvalue = FALSE</code>, the code chunk below masks any non-pasture cells and plots the resulting raster.</p>
+
+<div class="language-r text-document highlighter-rouge" title="lesson-7-1.R"><pre class="highlight"><code><span class="n">pasture</span> <span class="o">&lt;-</span> <span class="n">mask</span><span class="p">(</span><span class="n">nlcd</span><span class="p">,</span> <span class="n">nlcd</span> <span class="o">==</span> <span class="m">81</span><span class="p">,</span> <span class="n">maskvalue</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">)</span>
+<span class="n">plot</span><span class="p">(</span><span class="n">pasture</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p><img src="/maps-in-R-lesson/images/mask-1.png" alt="plot of chunk mask" /></p>
+
+<!--split-->
+
+<h3 id="exercise">Exercise</h3>
+
+<p>Create and plot a mask for a different type of land cover.</p>
+
+<p>You may consult <code class="highlighter-rouge">attr_table</code> to find the numeric <em>ID</em> matching a specific land cover class.</p>
+
+<p class="ToS"><a href="#/slides/mask">Top of Section</a></p>
+
+<hr />
+
+<p><a name="/slides/tmap"></a></p>
+
+<h2 id="adding-data-to-maps">Adding data to maps</h2>
+
+<p>The <em>tmap</em> (“thematic map”) package simplifies map-based visualization of data attributes associated with a given shapefile. Its logic and syntax are particularly easy to learn for those users already familiar with the popular graphics package <em>ggplot2</em>.</p>
+
+<!--split-->
+
+<h3 id="quick-mapping-with-qtmap">Quick mapping with <code class="highlighter-rouge">qtmap</code></h3>
+
+<p>Like the <code class="highlighter-rouge">qplot</code> function in ggplot2, <code class="highlighter-rouge">qtmap</code> serves to make a quick, less customized map from a single line of code. Its first argument is a spatial object forming the base of the map.</p>
+
+<div class="language-r text-document highlighter-rouge" title="lesson-7-1.R"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">tmap</span><span class="p">)</span>
+<span class="n">qtm</span><span class="p">(</span><span class="n">counties_proj</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p><img src="/maps-in-R-lesson/images/qtmap-1.png" alt="plot of chunk qtmap" /></p>
+
+<!--split-->
+
+<p>If the shapefile has associated data, its column names (as quoted strings) can be mapped to graphical elements of the plot. In the example below, the “fill” color of counties depends on their water area, and county names are shown at the center of each polygon.</p>
+
+<div class="language-r text-document highlighter-rouge" title="lesson-7-1.R"><pre class="highlight"><code><span class="n">qtm</span><span class="p">(</span><span class="n">counties_proj</span><span class="p">,</span> <span class="n">fill</span> <span class="o">=</span> <span class="s2">"AWATER"</span><span class="p">,</span> <span class="n">text</span> <span class="o">=</span> <span class="s2">"NAME"</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p><img src="/maps-in-R-lesson/images/qtmap_data-1.png" alt="plot of chunk qtmap_data" /></p>
+
+<!--split-->
+
+<h3 id="layered-thematic-maps-ggplot-style">Layered thematic maps (ggplot style)</h3>
+
+<p>For more detailed maps, you can add multiple layers defined by <code class="highlighter-rouge">tm_</code> functions. In the code below, <code class="highlighter-rouge">tm_shape</code> sets the spatial object from which the successive layers are derived; <code class="highlighter-rouge">tm_borders</code> adds the polygon outlines; <code class="highlighter-rouge">tm_fill</code> and <code class="highlighter-rouge">tm_text</code> define the same graphical elements as in our previous map, with additional arguments specifying the legend title and text size.</p>
+
+<div class="language-r text-document highlighter-rouge" title="lesson-7-1.R"><pre class="highlight"><code><span class="n">map1</span> <span class="o">&lt;-</span> <span class="n">tm_shape</span><span class="p">(</span><span class="n">counties_proj</span><span class="p">)</span> <span class="o">+</span>
+            <span class="n">tm_borders</span><span class="p">()</span> <span class="o">+</span>
+            <span class="n">tm_fill</span><span class="p">(</span><span class="s2">"AWATER"</span><span class="p">,</span> <span class="n">title</span> <span class="o">=</span> <span class="s2">"Water Area (sq. m)"</span><span class="p">)</span> <span class="o">+</span>
+            <span class="n">tm_text</span><span class="p">(</span><span class="s2">"NAME"</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="m">0.7</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<!--split-->
+
+<div class="language-r text-document highlighter-rouge" title="lesson-7-1.R"><pre class="highlight"><code><span class="n">map1</span>
+</code></pre>
+</div>
+
+<p><img src="/maps-in-R-lesson/images/tmap_show-1.png" alt="plot of chunk tmap_show" /></p>
+
+<!--split-->
+
+<p>Since we saved our thematic map in a variable <code class="highlighter-rouge">map1</code>, we can recall it and add more map elements, as shown below.</p>
+
+<div class="language-r text-document highlighter-rouge" title="lesson-7-1.R"><pre class="highlight"><code><span class="n">map1</span> <span class="o">+</span>
+    <span class="n">tm_style_classic</span><span class="p">(</span><span class="n">legend.frame</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">)</span> <span class="o">+</span>
+    <span class="n">tm_scale_bar</span><span class="p">(</span><span class="n">position</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="s2">"left"</span><span class="p">,</span> <span class="s2">"top"</span><span class="p">))</span>
+</code></pre>
+</div>
+
+<p><img src="/maps-in-R-lesson/images/tmap_add-1.png" alt="plot of chunk tmap_add" /></p>
+
+<p>Note that the <code class="highlighter-rouge">tm_style_</code> functions change the overall theme of the plot.</p>
+
+<!--split-->
+
+<h3 id="exercise">Exercise</h3>
+
+<p>Color scales in tmap are divided into bins by default.</p>
+
+<p>Consult the help file <code class="highlighter-rouge">?tm_fill</code> to find which argument controls how the scale is divided. Can you change it to a continuous gradient instead of bins?</p>
+
+<!--split-->
+
+<p>Note that a single thematic map can combine data from multiple vector or raster objects. You can find more tmap examples in the <a href="https://cran.r-project.org/web/packages/tmap/vignettes/tmap-nutshell.html">tmap in a nutshell</a> R vignette.</p>
+
+<p class="ToS"><a href="#/slides/tmap">Top of Section</a></p>
+
+<hr />
+
+<p><a name="/slides/leaflet"></a></p>
+
+<h2 id="interactive-maps-with-leaflet">Interactive maps with Leaflet</h2>
+
+<p>The <em>leaflet</em> package is a R interface to the leaflet JavaScript library. It produces interactive maps (with controls to zoom, pan and toggle layers) combining local data with base layers from web mapping services.</p>
+
+<!--split-->
+
+<p>The <code class="highlighter-rouge">leaflet()</code> function creates an empty leaflet map to which layers can be added using the pipe (<code class="highlighter-rouge">%&gt;%</code>) operator. The <code class="highlighter-rouge">addTiles</code> functions adds a base tiled map; by default, it imports tiles from OpenStreetMap. We center and zoom the map with <code class="highlighter-rouge">setView</code>.</p>
+
+<div class="language-r text-document highlighter-rouge" title="lesson-7-1.R"><pre class="highlight"><code><span class="n">library</span><span class="p">(</span><span class="n">leaflet</span><span class="p">)</span>
+<span class="n">imap</span> <span class="o">&lt;-</span> <span class="n">leaflet</span><span class="p">()</span> <span class="o">%&gt;%</span>
+            <span class="n">addTiles</span><span class="p">()</span> <span class="o">%&gt;%</span>
+            <span class="n">setView</span><span class="p">(</span><span class="n">lng</span> <span class="o">=</span> <span class="m">-76.505206</span><span class="p">,</span> <span class="n">lat</span> <span class="o">=</span> <span class="m">38.9767231</span><span class="p">,</span> 
+                    <span class="n">zoom</span> <span class="o">=</span> <span class="m">7</span><span class="p">)</span>
+<span class="n">imap</span>
+</code></pre>
+</div>
+
+<!--split-->
+
+<p>Switch to the “Viewer” tab in RStudio to see the result.</p>
+
+<p><img src="/maps-in-R-lesson/images/leaflet1.png" alt="leaflet1" /></p>
+
+<!--split-->
+
+<p>To show how leaflet can access open data from various web mapping services (WMS), we add real-time weather radar data from the <a href="https://mesonet.agron.iastate.edu/ogc/">Iowa Environmental Mesonet</a>.</p>
+
+<div class="language-r text-document highlighter-rouge" title="lesson-7-1.R"><pre class="highlight"><code><span class="n">imap</span> <span class="o">%&gt;%</span>
+    <span class="n">addWMSTiles</span><span class="p">(</span>
+        <span class="s2">"http://mesonet.agron.iastate.edu/cgi-bin/wms/nexrad/n0r.cgi"</span><span class="p">,</span>
+        <span class="n">layers</span> <span class="o">=</span> <span class="s2">"nexrad-n0r-900913"</span><span class="p">,</span> <span class="n">group</span> <span class="o">=</span> <span class="s2">"base_reflect"</span><span class="p">,</span>
+        <span class="n">options</span> <span class="o">=</span> <span class="n">WMSTileOptions</span><span class="p">(</span><span class="n">format</span> <span class="o">=</span> <span class="s2">"image/png"</span><span class="p">,</span> <span class="n">transparent</span> <span class="o">=</span> <span class="n">TRUE</span><span class="p">),</span>
+        <span class="n">attribution</span> <span class="o">=</span> <span class="s2">"Weather data © 2012 IEM Nexrad"</span>
+    <span class="p">)</span>
+</code></pre>
+</div>
+
+<p>Use the map controls to zoom away from the current location and find ongoing storm events.</p>
+
+<p class="ToS"><a href="#/slides/leaflet">Top of Section</a></p>
+
+<hr />
+
+<p><a name="/slides/shinyleaflet"></a></p>
+
+<h2 id="leaflet-maps-in-shiny">Leaflet maps in Shiny</h2>
+
+<p>Since leaflet outputs a JavaScript object, it integrates particularly well with Shiny applications. Leaflet maps can be embedded in Shiny with the <code class="highlighter-rouge">leafletOutput</code> (UI-side) and <code class="highlighter-rouge">renderLeaflet</code> (server-side) functions.</p>
+
+<!--split-->
+
+<p>Open the <code class="highlighter-rouge">lesson-7-2.R</code> handout. The first part of the code loads libraries, then imports the <code class="highlighter-rouge">counties_md</code> shapefile and <code class="highlighter-rouge">nlcd_proj</code> raster. The latter has been pre-projected to Web Mercator for compatibility with leaflet.</p>
+
+<p>While leaflet performs some projection conversions automatically, fixing raster projections in advance can greatly reduce the app loading time.</p>
+
+<div class="language-r text-document highlighter-rouge" title="lesson-7-2.R"><pre class="highlight"><code><span class="c1"># Libraries
+</span><span class="n">library</span><span class="p">(</span><span class="n">rgdal</span><span class="p">)</span>
+<span class="n">library</span><span class="p">(</span><span class="n">raster</span><span class="p">)</span>
+<span class="n">library</span><span class="p">(</span><span class="n">leaflet</span><span class="p">)</span>
+
+<span class="c1"># Load data
+</span><span class="n">counties_md</span> <span class="o">&lt;-</span> <span class="n">readOGR</span><span class="p">(</span><span class="s2">"_slides/data/cb_500k_maryland"</span><span class="p">,</span> <span class="s2">"cb_500k_maryland"</span><span class="p">)</span>
+<span class="n">nlcd_proj</span> <span class="o">&lt;-</span> <span class="n">raster</span><span class="p">(</span><span class="s2">"_slides/data/nlcd_proj.grd"</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<!--split-->
+
+<h3 id="defining-the-ui">Defining the UI</h3>
+
+<p>For the sake of this demonstration, our user interface will be composed of a single <code class="highlighter-rouge">leafletOutput</code> object inside a <code class="highlighter-rouge">fluidPage</code> (a flexible Shiny layout).</p>
+
+<div class="language-r text-document highlighter-rouge" title="lesson-7-2.R"><pre class="highlight"><code><span class="n">ui</span> <span class="o">&lt;-</span> <span class="n">fluidPage</span><span class="p">(</span><span class="n">title</span> <span class="o">=</span> <span class="s2">"Interactive Map"</span><span class="p">,</span>
+    <span class="n">leafletOutput</span><span class="p">(</span><span class="s2">"sesync_map"</span><span class="p">)</span>
+<span class="p">)</span>
+</code></pre>
+</div>
+
+<!--split-->
+
+<h3 id="defining-the-server">Defining the server</h3>
+
+<p>In the server function, we first specify that the output will be generated by a <code class="highlighter-rouge">renderLeaflet</code>.</p>
+
+<div class="language-r text-document highlighter-rouge" title="lesson-7-2.R"><pre class="highlight"><code><span class="n">server</span> <span class="o">&lt;-</span> <span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">output</span><span class="p">[[</span><span class="s2">"sesync_map"</span><span class="p">]]</span> <span class="o">&lt;-</span> <span class="n">renderLeaflet</span><span class="p">({</span>
+</code></pre>
+</div>
+
+<p>The following <code class="highlighter-rouge">setView</code> and <code class="highlighter-rouge">addTiles</code> command produce the same base map as earlier. We then add a point marker at the location of SESYNc, with a popup description</p>
+
+<div class="language-r text-document highlighter-rouge" title="lesson-7-2.R"><pre class="highlight"><code>        <span class="n">addMarkers</span><span class="p">(</span><span class="n">lng</span> <span class="o">=</span> <span class="m">-76.505206</span><span class="p">,</span> <span class="n">lat</span> <span class="o">=</span> <span class="m">38.9767231</span><span class="p">,</span> 
+                   <span class="n">popup</span> <span class="o">=</span> <span class="s2">"SESYNC"</span><span class="p">)</span> <span class="o">%&gt;%</span>
+</code></pre>
+</div>
+
+<!--split-->
+
+<h3 id="adding-polygon-and-raster-layers">Adding polygon and raster layers</h3>
+
+<p>We then add the county outlines with <code class="highlighter-rouge">addPolygons</code> and the land cover information with <code class="highlighter-rouge">addRasterImage</code>.</p>
+
+<div class="language-r text-document highlighter-rouge" title="lesson-7-2.R"><pre class="highlight"><code>        <span class="n">addPolygons</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">counties_md</span><span class="p">,</span> <span class="n">fill</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">)</span>  <span class="o">%&gt;%</span>
+        <span class="n">addRasterImage</span><span class="p">(</span><span class="n">nlcd_proj</span><span class="p">,</span> <span class="n">opacity</span> <span class="o">=</span> <span class="m">0.7</span><span class="p">,</span> 
+                       <span class="n">project</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<!--split-->
+
+<p>Here is the complete server function. You are now ready to run the app.</p>
+
+<div class="language-r text-document highlighter-rouge" title="lesson-7-2.R"><pre class="highlight"><code><span class="n">server</span> <span class="o">&lt;-</span> <span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span> <span class="n">output</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">output</span><span class="p">[[</span><span class="s2">"sesync_map"</span><span class="p">]]</span> <span class="o">&lt;-</span> <span class="n">renderLeaflet</span><span class="p">({</span>
+        <span class="n">leaflet</span><span class="p">()</span> <span class="o">%&gt;%</span> 
+            <span class="n">setView</span><span class="p">(</span><span class="n">lng</span> <span class="o">=</span> <span class="m">-76.505206</span><span class="p">,</span> <span class="n">lat</span> <span class="o">=</span> <span class="m">38.9767231</span><span class="p">,</span> 
+                    <span class="n">zoom</span> <span class="o">=</span> <span class="m">8</span><span class="p">)</span> <span class="o">%&gt;%</span>
+            <span class="n">addTiles</span><span class="p">()</span> <span class="o">%&gt;%</span>
+            <span class="n">addMarkers</span><span class="p">(</span><span class="n">lng</span> <span class="o">=</span> <span class="m">-76.505206</span><span class="p">,</span> <span class="n">lat</span> <span class="o">=</span> <span class="m">38.9767231</span><span class="p">,</span> 
+                       <span class="n">popup</span> <span class="o">=</span> <span class="s2">"SESYNC"</span><span class="p">)</span> <span class="o">%&gt;%</span>
+            <span class="n">addPolygons</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">counties_md</span><span class="p">,</span> <span class="n">fill</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">)</span>  <span class="o">%&gt;%</span>
+            <span class="n">addRasterImage</span><span class="p">(</span><span class="n">nlcd_proj</span><span class="p">,</span> <span class="n">opacity</span> <span class="o">=</span> <span class="m">0.7</span><span class="p">,</span> 
+                           <span class="n">project</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">)</span>
+    <span class="p">})</span>    
+<span class="p">}</span>
+</code></pre>
+</div>
+
+<!--split-->
+
+<h3 id="map-layer-controls">Map layer controls</h3>
+
+<p>We complete this lesson by adding some interactive control to toggle specific layers on the map.</p>
+
+<p>Open the <code class="highlighter-rouge">lesson-7-3.R</code> handout. It is identical to the previous app code, except for a few additional lines in the server function.</p>
+
+<!--split-->
+
+<p>First, notice that we assigned the polygons layer to a <code class="highlighter-rouge">group</code> named “MD counties”.</p>
+
+<div class="language-r text-document highlighter-rouge" title="lesson-7-3.R"><pre class="highlight"><code>        <span class="n">addPolygons</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">counties_md</span><span class="p">,</span> <span class="n">fill</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">,</span> 
+                    <span class="n">group</span> <span class="o">=</span> <span class="s2">"MD counties"</span><span class="p">)</span> <span class="o">%&gt;%</span>
+</code></pre>
+</div>
+
+<!--split-->
+
+<p>We add two separate raster layers, each produced by masking all but a single land cover class. We put each layer in a group named for its land cover class and assign it a color.</p>
+
+<div class="language-r text-document highlighter-rouge" title="lesson-7-3.R"><pre class="highlight"><code>        <span class="n">addRasterImage</span><span class="p">(</span><span class="n">mask</span><span class="p">(</span><span class="n">nlcd_proj</span><span class="p">,</span> <span class="n">nlcd_proj</span> <span class="o">==</span> <span class="m">41</span><span class="p">,</span> 
+                            <span class="n">maskvalue</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">),</span>
+                       <span class="n">group</span> <span class="o">=</span> <span class="s2">"Deciduous Forest"</span><span class="p">,</span> 
+                       <span class="n">colors</span> <span class="o">=</span> <span class="s2">"green"</span><span class="p">,</span> <span class="n">project</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">)</span> <span class="o">%&gt;%</span>
+        <span class="n">addRasterImage</span><span class="p">(</span><span class="n">mask</span><span class="p">(</span><span class="n">nlcd_proj</span><span class="p">,</span> <span class="n">nlcd_proj</span> <span class="o">==</span> <span class="m">81</span><span class="p">,</span> 
+                            <span class="n">maskvalue</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">),</span>
+                       <span class="n">group</span> <span class="o">=</span> <span class="s2">"Pasture"</span><span class="p">,</span> 
+                       <span class="n">colors</span> <span class="o">=</span> <span class="s2">"yellow"</span><span class="p">,</span> <span class="n">project</span> <span class="o">=</span> <span class="n">FALSE</span><span class="p">)</span> <span class="o">%&gt;%</span>
+</code></pre>
+</div>
+
+<!--split-->
+
+<p>We then call <code class="highlighter-rouge">addLayersControl</code> to add controls that toggle between the two rasters (<code class="highlighter-rouge">baseGroups</code>) with the option of overlaying the county polygons (<code class="highlighter-rouge">overlayGroups</code>).</p>
+
+<div class="language-r text-document highlighter-rouge" title="lesson-7-3.R"><pre class="highlight"><code>        <span class="n">addLayersControl</span><span class="p">(</span><span class="n">baseGroups</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="s2">"Deciduous Forest"</span><span class="p">,</span> 
+                                        <span class="s2">"Pasture"</span><span class="p">),</span>
+                         <span class="n">overlayGroups</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="s2">"MD counties"</span><span class="p">))</span>
+</code></pre>
+</div>
+
+<p>You can now run the app and try the layer controls.</p>
+
+<!--split-->
+
+<p><img src="/maps-in-R-lesson/images/leafletshiny.png" alt="leaflet_shiny" /></p>
+
+<p>In addition to these controls embedded in the map, it is possible to modify a map based on other input objects in the Shiny app. See the <a href="http://shiny.rstudio.com/gallery/superzip-example.html">SuperZip app</a> in the Shiny gallery for a full example.</p>
+
+<p class="ToS"><a href="#/slides/shinyleaflet">Top of Section</a></p>
+
+<hr />
+
+
+      </div>
+    </div>
+
+  </body>
+
+</html>
