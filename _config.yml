@@ -4,8 +4,8 @@ title: Maps in R
 baseurl: /maps-in-R-lesson
 email: cyberhelp@sesync.org
 description: ""
-styleurl: https://cdn.rawgit.com/sesync-ci/lesson-style/1.0.1
-# styleurl: https://rawgit.com/sesync-ci/lesson-style/master
+styleurl: https://cdn.rawgit.com/sesync-ci/lesson-style/1.0.1/docs
+# styleurl: https://rawgit.com/sesync-ci/lesson-style/master/docs
 reveal: https://cdn.rawgit.com/hakimel/reveal.js/3.3.0
 lesson: 7
 
