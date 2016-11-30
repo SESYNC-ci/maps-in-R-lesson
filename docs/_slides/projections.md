@@ -36,7 +36,7 @@ proj4string(counties_md)
 ~~~
 {:.input}
 ~~~
-Error in eval(expr, envir, enclos): could not find function "proj4string"
+[1] "+proj=longlat +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0"
 ~~~
 {:.output}
 
@@ -45,7 +45,7 @@ proj4string(nlcd)
 ~~~
 {:.input}
 ~~~
-Error in eval(expr, envir, enclos): could not find function "proj4string"
+[1] "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"
 ~~~
 {:.output}
 
@@ -64,25 +64,9 @@ operation.
 ~~~r
 counties_proj <- spTransform(counties_md, 
                              proj4string(nlcd))
-~~~
-
-~~~
-Error in eval(expr, envir, enclos): could not find function "spTransform"
-~~~
-
-~~~r
 plot(nlcd)
-~~~
-
-~~~
-Error in plot(nlcd): object 'nlcd' not found
-~~~
-
-~~~r
 plot(counties_proj, add = TRUE)
 ~~~
-
-~~~
-Error in plot(counties_proj, add = TRUE): object 'counties_proj' not found
-~~~
 {:.text-document title="worksheet-1.R"}
+
+![plot of chunk sptransform]({{ site.baseurl }}/images/sptransform-1.png)

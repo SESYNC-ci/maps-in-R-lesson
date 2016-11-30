@@ -10,17 +10,6 @@ We start by loading the **raster** package in R and importing a raster file with
 
 ~~~r
 library(raster)
-~~~
-
-~~~
-Loading required package: methods
-~~~
-
-~~~
-Loading required package: sp
-~~~
-
-~~~r
 nlcd <- raster("data/nlcd_agg.grd")
 ~~~
 {:.text-document title="worksheet-1.R"}

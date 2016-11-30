@@ -9,11 +9,9 @@ To display the spatial features (points, lines or polygons) in a *Spatial* objec
 ~~~r
 plot(counties_md)
 ~~~
-
-~~~
-Error in plot(counties_md): object 'counties_md' not found
-~~~
 {:.text-document title="worksheet-1.R"}
+
+![plot of chunk shp_plot]({{ site.baseurl }}/images/shp_plot-1.png)
 
 ===
 
@@ -26,28 +24,12 @@ To add a new layer to an existing plot, use the `add = TRUE` argument.
 
 ~~~r
 howard <- counties_md[counties_md[["NAME"]] == "Howard", ]
-~~~
-
-~~~
-Error in eval(expr, envir, enclos): object 'counties_md' not found
-~~~
-
-~~~r
 plot(counties_md)
-~~~
-
-~~~
-Error in plot(counties_md): object 'counties_md' not found
-~~~
-
-~~~r
 plot(howard, col = "red", add = TRUE)
 ~~~
-
-~~~
-Error in plot(howard, col = "red", add = TRUE): object 'howard' not found
-~~~
 {:.text-document title="worksheet-1.R"}
+
+![plot of chunk plot_add]({{ site.baseurl }}/images/plot_add-1.png)
 
 ===
 
@@ -58,30 +40,14 @@ the center point of each polygon.
 
 ~~~r
 plot(counties_md)
-~~~
-
-~~~
-Error in plot(counties_md): object 'counties_md' not found
-~~~
-
-~~~r
 plot(howard, col = "red", add = TRUE)
-~~~
-
-~~~
-Error in plot(howard, col = "red", add = TRUE): object 'howard' not found
-~~~
-
-~~~r
 text(coordinates(counties_md), 
      labels = counties_md[["NAME"]],
      cex = 0.7)
 ~~~
-
-~~~
-Error in text(coordinates(counties_md), labels = counties_md[["NAME"]], : could not find function "coordinates"
-~~~
 {:.text-document title="worksheet-1.R"}
+
+![plot of chunk plot_text]({{ site.baseurl }}/images/plot_text-1.png)
 
 ===
 

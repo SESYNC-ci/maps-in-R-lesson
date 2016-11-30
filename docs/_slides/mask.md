@@ -11,20 +11,11 @@ For example, the masking layer `nlcd == 81` returns `TRUE` for cells with land c
 
 ~~~r
 pasture <- mask(nlcd, nlcd == 81, maskvalue = FALSE)
-~~~
-
-~~~
-Error in eval(expr, envir, enclos): could not find function "mask"
-~~~
-
-~~~r
 plot(pasture)
 ~~~
-
-~~~
-Error in plot(pasture): object 'pasture' not found
-~~~
 {:.text-document title="worksheet-1.R"}
+
+![plot of chunk mask]({{ site.baseurl }}/images/mask-1.png)
 
 ===
 

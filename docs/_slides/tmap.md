@@ -15,11 +15,9 @@ Like the `qplot` function in ggplot2, `qtmap` serves to make a quick, less custo
 library(tmap)
 qtm(counties_proj)
 ~~~
-
-~~~
-Error in qtm(counties_proj): object 'counties_proj' not found
-~~~
 {:.text-document title="worksheet-1.R"}
+
+![plot of chunk qtmap]({{ site.baseurl }}/images/qtmap-1.png)
 
 ===
 
@@ -28,11 +26,9 @@ If the shapefile has associated data, its column names (as quoted strings) can b
 ~~~r
 qtm(counties_proj, fill = "AWATER", text = "NAME")
 ~~~
-
-~~~
-Error in qtm(counties_proj, fill = "AWATER", text = "NAME"): object 'counties_proj' not found
-~~~
 {:.text-document title="worksheet-1.R"}
+
+![plot of chunk qtmap_data]({{ site.baseurl }}/images/qtmap_data-1.png)
 
 ===
 
@@ -47,10 +43,6 @@ map1 <- tm_shape(counties_proj) +
             tm_fill("AWATER", title = "Water Area (sq. m)") +
             tm_text("NAME", size = 0.7)
 ~~~
-
-~~~
-Error in as.list.environment(environment()): object 'counties_proj' not found
-~~~
 {:.text-document title="worksheet-1.R"}
 
 ===
@@ -59,11 +51,9 @@ Error in as.list.environment(environment()): object 'counties_proj' not found
 ~~~r
 map1
 ~~~
-
-~~~
-Error in eval(expr, envir, enclos): object 'map1' not found
-~~~
 {:.text-document title="worksheet-1.R"}
+
+![plot of chunk tmap_show]({{ site.baseurl }}/images/tmap_show-1.png)
 
 ===
 
@@ -75,11 +65,9 @@ map1 +
     tm_style_classic(legend.frame = TRUE) +
     tm_scale_bar(position = c("left", "top"))
 ~~~
-
-~~~
-Error in eval(expr, envir, enclos): object 'map1' not found
-~~~
 {:.text-document title="worksheet-1.R"}
+
+![plot of chunk tmap_add]({{ site.baseurl }}/images/tmap_add-1.png)
 
 Note that the `tm_style_` functions change the overall theme of the plot.
 
