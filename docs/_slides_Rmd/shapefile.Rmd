@@ -1,0 +1,33 @@
+---
+---
+
+## Reading shapefiles into R 
+
+Vector data in shapefiles can be read via the `readOGR` function in `rgdal`,
+which is a package linking R to the open source Geospatial Data Abstraction 
+Library (GDAL).
+
+Here, we read a shapefile corresponding to county boundaries for the state 
+of Maryland. This data was extracted from the full county boundaries
+shapefile available on the [US census website](https://www.census.gov/geo/maps-data/data/cbf/cbf_counties.html).
+
+```{r load_shp, results = "hide", message = FALSE, title = "worksheet-1.R"}
+library(rgdal)
+counties_md <- readOGR("data/cb_500k_maryland", 
+                       "cb_500k_maryland")
+```
+
+Note that the first argument to `readOGR` is the path of the shapefile 
+whereas the second argument is the layer name; for simple shapefiles, it is
+usually identical to the file name.
+
+===
+
+The shapefile is read as a *SpatialPolygonsDataFrame* object, which contains
+both a list of 24 county (multi)polygons (`counties_md@polygons`), as well as a
+data frame (`counties_md@data`) where each row stores the attributes of the
+corresponding county.
+
+```{r shp_summary}
+summary(counties_md)
+```
