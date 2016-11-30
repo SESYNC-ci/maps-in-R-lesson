@@ -24,7 +24,7 @@ Web-based tiled map services like Google Maps use a simplified, less accurate Me
 
 ===
 
-### Projection in R
+### Projection String
 
 Coordinate systems in R are described in a standard PROJ.4 string format.
 

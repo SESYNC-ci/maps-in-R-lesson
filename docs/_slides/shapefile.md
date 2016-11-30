@@ -1,7 +1,7 @@
 ---
 ---
 
-## Reading shapefiles into R 
+## Reading shapefiles
 
 Vector data in shapefiles can be read via the `readOGR` function in `rgdal`,
 which is a package linking R to the open source Geospatial Data Abstraction 

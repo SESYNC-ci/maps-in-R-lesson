@@ -1,7 +1,7 @@
 ---
 ---
 
-## Reading rasters into R
+## Reading rasters
 
 While vector spatial layers are composed of geometrical objects defined by their vertices, raster layers are grids of pixels with attached values. 
 
