@@ -5,7 +5,7 @@ handouts:
  - worksheet-1.R
  - worksheet-2.R
  - worksheet-3.R
- - data/cb_500k_maryland
+ - data/cb_2016_md_county_5m
  - data/nlcd_agg.grd
  - data/nlcd_agg.gri
  - data/nlcd_proj.grd

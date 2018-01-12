@@ -14,8 +14,8 @@ shapefile available on the [US census website](https://www.census.gov/geo/maps-d
 
 ~~~r
 library(rgdal)
-counties_md <- readOGR("data/cb_500k_maryland", 
-                       "cb_500k_maryland")
+counties_md <- readOGR('data/cb_2016_md_county_5m', 
+                       'cb_2016_md_county_5m')
 ~~~
 {:.text-document title="worksheet-1.R"}
 
@@ -40,7 +40,7 @@ Object of class SpatialPolygonsDataFrame
 Coordinates:
         min       max
 x -79.48765 -75.04894
-y  37.91172  39.72304
+y  37.91172  39.72312
 Is projected: FALSE 
 proj4string :
 [+proj=longlat +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0]
@@ -55,7 +55,7 @@ Data attributes:
          (Other):18   (Other) :18   (Other)       :18   (Other):18  
            NAME    LSAD        ALAND               AWATER         
  Baltimore   : 2   06:23   Min.   :2.096e+08   Min.   :6.346e+06  
- Allegany    : 1   25: 1   1st Qu.:8.279e+08   1st Qu.:2.414e+07  
+ Allegany    : 1   25: 1   1st Qu.:8.279e+08   1st Qu.:2.418e+07  
  Anne Arundel: 1           Median :1.087e+09   Median :2.007e+08  
  Calvert     : 1           Mean   :1.048e+09   Mean   :2.910e+08  
  Caroline    : 1           3rd Qu.:1.222e+09   3rd Qu.:4.558e+08  

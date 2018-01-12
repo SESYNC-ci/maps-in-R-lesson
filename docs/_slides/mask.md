@@ -16,6 +16,7 @@ plot(pasture)
 {:.text-document title="worksheet-1.R"}
 
 ![plot of chunk mask]({{ site.baseurl }}/images/mask-1.png)
+{:.captioned}
 
 ===
 

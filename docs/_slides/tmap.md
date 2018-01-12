@@ -18,6 +18,7 @@ qtm(counties_proj)
 {:.text-document title="worksheet-1.R"}
 
 ![plot of chunk qtmap]({{ site.baseurl }}/images/qtmap-1.png)
+{:.captioned}
 
 ===
 
@@ -29,6 +30,7 @@ qtm(counties_proj, fill = "AWATER", text = "NAME")
 {:.text-document title="worksheet-1.R"}
 
 ![plot of chunk qtmap_data]({{ site.baseurl }}/images/qtmap_data-1.png)
+{:.captioned}
 
 ===
 
@@ -54,6 +56,7 @@ map1
 {:.text-document title="worksheet-1.R"}
 
 ![plot of chunk tmap_show]({{ site.baseurl }}/images/tmap_show-1.png)
+{:.captioned}
 
 ===
 
@@ -68,6 +71,7 @@ map1 +
 {:.text-document title="worksheet-1.R"}
 
 ![plot of chunk tmap_add]({{ site.baseurl }}/images/tmap_add-1.png)
+{:.captioned}
 
 Note that the `tm_style_` functions change the overall theme of the plot.
 

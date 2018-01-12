@@ -12,6 +12,7 @@ plot(counties_md)
 {:.text-document title="worksheet-1.R"}
 
 ![plot of chunk shp_plot]({{ site.baseurl }}/images/shp_plot-1.png)
+{:.captioned}
 
 ===
 
@@ -30,6 +31,7 @@ plot(howard, col = "red", add = TRUE)
 {:.text-document title="worksheet-1.R"}
 
 ![plot of chunk plot_add]({{ site.baseurl }}/images/plot_add-1.png)
+{:.captioned}
 
 ===
 
@@ -48,6 +50,7 @@ text(coordinates(counties_md),
 {:.text-document title="worksheet-1.R"}
 
 ![plot of chunk plot_text]({{ site.baseurl }}/images/plot_text-1.png)
+{:.captioned}
 
 ===
 

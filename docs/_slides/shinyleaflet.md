@@ -19,7 +19,7 @@ library(raster)
 library(leaflet)
 
 # Load data
-counties_md <- readOGR("data/cb_500k_maryland", "cb_500k_maryland")
+counties_md <- readOGR('data/cb_2016_md_county_5m', 'cb_2016_md_county_5m')
 nlcd_proj <- raster("data/nlcd_proj.grd")
 ~~~
 {:.text-document title="worksheet-2.R"}

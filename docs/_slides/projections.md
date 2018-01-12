@@ -70,3 +70,4 @@ plot(counties_proj, add = TRUE)
 {:.text-document title="worksheet-1.R"}
 
 ![plot of chunk sptransform]({{ site.baseurl }}/images/sptransform-1.png)
+{:.captioned}
