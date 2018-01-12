@@ -1,7 +1,7 @@
 ---
-layout: slideshow
-reveal-theme: /css/theme/sky.css
+layout: instructor
 style: /css/slideshow.css
+reveal-theme: /css/theme/sky.css
 ---
 
 <section markdown="1">
@@ -10,6 +10,7 @@ style: /css/slideshow.css
 {:style="text-transform: none;"}
 
 Lesson {{ site.lesson }} with *{{ site.instructor }}*
+{:style="text-align: center;"}
 
 </section>
 

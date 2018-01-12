@@ -5,7 +5,13 @@ handouts:
  - worksheet-1.R
  - worksheet-2.R
  - worksheet-3.R
-tag: v0.0
+ - data/cb_500k_maryland
+ - data/nlcd_agg.grd
+ - data/nlcd_agg.gri
+ - data/nlcd_proj.grd
+ - data/nlcd_proj.gri
+ - data/README.md
+tag: v0.1
 lesson: 7
 instructor: Philippe Marchand
 authors:
@@ -31,8 +37,8 @@ slide_sorter:
 
 # Style
 
-styleurl: https://cdn.rawgit.com/sesync-ci/lesson-style/1.0.1
-reveal: https://cdn.rawgit.com/hakimel/reveal.js/3.3.0
+styleurl: https://cdn.rawgit.com/sesync-ci/lesson-style/v1.3/docs
+reveal: https://cdn.rawgit.com/hakimel/reveal.js/3.5.0
 
 # Jekyll
 

@@ -1,7 +1,11 @@
 # R
-*.Rproj
 .Rhistory
 .Rproj.user
+docs/_slides_Rmd/cache
 
-# symlink to data
-_slides/data
+# Jupyter
+.ipynb_checkpoints/
+
+# Jekyll
+docs/.bundle
+docs/_site
