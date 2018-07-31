@@ -7,7 +7,7 @@ While vector spatial layers are composed of geometrical objects defined by their
 
 We start by loading the **raster** package in R and importing a raster file with the eponymous `raster` function. This file is a portion of the [National Land Cover Database](http://www.mrlc.gov/nlcd2011.php), which we already cropped and reduced to a lower resolution in order to speed up processing time for this tutorial.
 
-```{r load_raster, title = "worksheet-1.R"}
+```{r load_raster, title = "{{ site.handouts[1] }}"}
 library(raster)
 nlcd <- raster("data/nlcd_agg.grd")
 ```
@@ -23,7 +23,7 @@ nlcd
 ===
 
 The values in raster cells range from 0 to 255, yet land cover is a categorical variable. The mapping of numbers to categories can be found in the raster's attribute table:
-```{r attr_table, title = "worksheet-1.R"}
+```{r attr_table, title = "{{ site.handouts[1] }}"}
 attr_table <- nlcd@data@attributes[[1]]
 ```
 
@@ -32,7 +32,7 @@ Each land cover category has a distinct color specified by the "Red", "Green" an
 ===
 
 We can visualize the whole raster with `plot`.
-```{r raster_plot, title = "worksheet-1.R", fig.keep="last"}
+```{r raster_plot, title = "{{ site.handouts[1] }}", fig.keep="last"}
 plot(nlcd)
 ```
 

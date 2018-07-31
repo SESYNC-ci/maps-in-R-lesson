@@ -31,23 +31,31 @@ Coordinate systems in R are described in a standard PROJ.4 string format.
 The `counties_md` polygons layer uses a geographic coordinate system ("+proj=longlat") based on the *NAD83* datum, whereas the `nlcd` has an Albers equal-area projection ("+proj=aea").
 
 
+
 ~~~r
-proj4string(counties_md)
+> proj4string(counties_md)
 ~~~
-{:.input}
+{:.input title="Console"}
+
+
 ~~~
 [1] "+proj=longlat +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0"
 ~~~
 {:.output}
 
+
+
 ~~~r
-proj4string(nlcd)
+> proj4string(nlcd)
 ~~~
-{:.input}
+{:.input title="Console"}
+
+
 ~~~
 [1] "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs"
 ~~~
 {:.output}
+
 
 Question
 : Why is the equal-area projection useful for a land cover dataset?
@@ -61,13 +69,13 @@ Returning to our original problem, we can superpose the two layers by first conv
 operation.
 
 
+
 ~~~r
 counties_proj <- spTransform(counties_md, 
                              proj4string(nlcd))
 plot(nlcd)
 plot(counties_proj, add = TRUE)
 ~~~
-{:.text-document title="worksheet-1.R"}
-
-![plot of chunk sptransform]({{ site.baseurl }}/images/sptransform-1.png)
+{:.text-document title="{{ site.handouts[1] }}"}
+![ ]({{ site.baseurl }}/images/projections/sptransform-1.png)
 {:.captioned}

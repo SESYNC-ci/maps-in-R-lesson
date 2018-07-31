@@ -8,21 +8,26 @@ While vector spatial layers are composed of geometrical objects defined by their
 We start by loading the **raster** package in R and importing a raster file with the eponymous `raster` function. This file is a portion of the [National Land Cover Database](http://www.mrlc.gov/nlcd2011.php), which we already cropped and reduced to a lower resolution in order to speed up processing time for this tutorial.
 
 
+
 ~~~r
 library(raster)
 nlcd <- raster("data/nlcd_agg.grd")
 ~~~
-{:.text-document title="worksheet-1.R"}
+{:.text-document title="{{ site.handouts[1] }}"}
+
 
 ===
 
 A raster is fundamentally a data matrix with associated spatial properties (e.g. extent, resolution and projection) that allow its values to be mapped onto geographical space. You can view these key properties -- the raster's metadata -- by typing the object name in the console.
 
 
+
 ~~~r
-nlcd
+> nlcd
 ~~~
-{:.input}
+{:.input title="Console"}
+
+
 ~~~
 class       : RasterLayer 
 dimensions  : 2514, 3004, 7552056  (nrow, ncol, ncell)
@@ -39,14 +44,17 @@ attributes  :
 ~~~
 {:.output}
 
+
 ===
 
 The values in raster cells range from 0 to 255, yet land cover is a categorical variable. The mapping of numbers to categories can be found in the raster's attribute table:
 
+
 ~~~r
 attr_table <- nlcd@data@attributes[[1]]
 ~~~
-{:.text-document title="worksheet-1.R"}
+{:.text-document title="{{ site.handouts[1] }}"}
+
 
 Each land cover category has a distinct color specified by the "Red", "Green" and "Blue" columns. 
 
@@ -54,19 +62,21 @@ Each land cover category has a distinct color specified by the "Red", "Green" an
 
 We can visualize the whole raster with `plot`.
 
+
 ~~~r
 plot(nlcd)
 ~~~
-{:.text-document title="worksheet-1.R"}
-
-![plot of chunk raster_plot]({{ site.baseurl }}/images/raster_plot-1.png)
+{:.text-document title="{{ site.handouts[1] }}"}
+![ ]({{ site.baseurl }}/images/raster/raster_plot-1.png)
 {:.captioned}
 
 ===
 
 At this point, we might want to superpose the county boundaries on top of the raster image. However, the following instruction does not show the county polygons. Why not?
 
+
 ~~~r
-plot(counties_md, add = TRUE)
+> plot(counties_md, add = TRUE)
 ~~~
-{:.input}
+{:.input title="Console"}
+

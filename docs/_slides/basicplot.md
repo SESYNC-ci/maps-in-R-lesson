@@ -6,12 +6,12 @@
 To display the spatial features (points, lines or polygons) in a *Spatial* object, you can simply use the `plot` function.
 
 
+
 ~~~r
 plot(counties_md)
 ~~~
-{:.text-document title="worksheet-1.R"}
-
-![plot of chunk shp_plot]({{ site.baseurl }}/images/shp_plot-1.png)
+{:.text-document title="{{ site.handouts[1] }}"}
+![ ]({{ site.baseurl }}/images/basicplot/shp_plot-1.png)
 {:.captioned}
 
 ===
@@ -23,14 +23,14 @@ by name. Note that we can subset `counties_md` just like a regular data frame.
 To add a new layer to an existing plot, use the `add = TRUE` argument.
 
 
+
 ~~~r
 howard <- counties_md[counties_md[["NAME"]] == "Howard", ]
 plot(counties_md)
 plot(howard, col = "red", add = TRUE)
 ~~~
-{:.text-document title="worksheet-1.R"}
-
-![plot of chunk plot_add]({{ site.baseurl }}/images/plot_add-1.png)
+{:.text-document title="{{ site.handouts[1] }}"}
+![ ]({{ site.baseurl }}/images/basicplot/plot_add-1.png)
 {:.captioned}
 
 ===
@@ -40,6 +40,7 @@ In the code below, note that calling `coordinates` on a polygon object returns
 the center point of each polygon.
 
 
+
 ~~~r
 plot(counties_md)
 plot(howard, col = "red", add = TRUE)
@@ -47,9 +48,8 @@ text(coordinates(counties_md),
      labels = counties_md[["NAME"]],
      cex = 0.7)
 ~~~
-{:.text-document title="worksheet-1.R"}
-
-![plot of chunk plot_text]({{ site.baseurl }}/images/plot_text-1.png)
+{:.text-document title="{{ site.handouts[1] }}"}
+![ ]({{ site.baseurl }}/images/basicplot/plot_text-1.png)
 {:.captioned}
 
 ===

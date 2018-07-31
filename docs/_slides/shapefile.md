@@ -12,12 +12,14 @@ of Maryland. This data was extracted from the full county boundaries
 shapefile available on the [US census website](https://www.census.gov/geo/maps-data/data/cbf/cbf_counties.html).
 
 
+
 ~~~r
 library(rgdal)
 counties_md <- readOGR('data/cb_2016_md_county_5m', 
                        'cb_2016_md_county_5m')
 ~~~
-{:.text-document title="worksheet-1.R"}
+{:.text-document title="{{ site.handouts[1] }}"}
+
 
 Note that the first argument to `readOGR` is the path of the shapefile 
 whereas the second argument is the layer name; for simple shapefiles, it is
@@ -31,10 +33,13 @@ data frame (`counties_md@data`) where each row stores the attributes of the
 corresponding county.
 
 
+
 ~~~r
-summary(counties_md)
+> summary(counties_md)
 ~~~
-{:.input}
+{:.input title="Console"}
+
+
 ~~~
 Object of class SpatialPolygonsDataFrame
 Coordinates:
@@ -63,3 +68,4 @@ Data attributes:
  (Other)     :17                                                  
 ~~~
 {:.output}
+

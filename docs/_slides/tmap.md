@@ -11,25 +11,25 @@ The *tmap* ("thematic map") package simplifies map-based visualization of data a
 
 Like the `qplot` function in ggplot2, `qtmap` serves to make a quick, less customized map from a single line of code. Its first argument is a spatial object forming the base of the map.
 
+
 ~~~r
 library(tmap)
 qtm(counties_proj)
 ~~~
-{:.text-document title="worksheet-1.R"}
-
-![plot of chunk qtmap]({{ site.baseurl }}/images/qtmap-1.png)
+{:.text-document title="{{ site.handouts[1] }}"}
+![ ]({{ site.baseurl }}/images/tmap/qtmap-1.png)
 {:.captioned}
 
 ===
 
 If the shapefile has associated data, its column names (as quoted strings) can be mapped to graphical elements of the plot. In the example below, the "fill" color of counties depends on their water area, and county names are shown at the center of each polygon.
 
+
 ~~~r
 qtm(counties_proj, fill = "AWATER", text = "NAME")
 ~~~
-{:.text-document title="worksheet-1.R"}
-
-![plot of chunk qtmap_data]({{ site.baseurl }}/images/qtmap_data-1.png)
+{:.text-document title="{{ site.handouts[1] }}"}
+![ ]({{ site.baseurl }}/images/tmap/qtmap_data-1.png)
 {:.captioned}
 
 ===
@@ -39,23 +39,25 @@ qtm(counties_proj, fill = "AWATER", text = "NAME")
 For more detailed maps, you can add multiple layers defined by `tm_` functions. In the code below, `tm_shape` sets the spatial object from which the successive layers are derived; `tm_borders` adds the polygon outlines; `tm_fill` and `tm_text` define the same graphical elements as in our previous map, with additional arguments specifying the legend title and text size.
 
 
+
 ~~~r
 map1 <- tm_shape(counties_proj) +
             tm_borders() +
             tm_fill("AWATER", title = "Water Area (sq. m)") +
             tm_text("NAME", size = 0.7)
 ~~~
-{:.text-document title="worksheet-1.R"}
+{:.text-document title="{{ site.handouts[1] }}"}
+
 
 ===
 
 
-~~~r
-map1
-~~~
-{:.text-document title="worksheet-1.R"}
 
-![plot of chunk tmap_show]({{ site.baseurl }}/images/tmap_show-1.png)
+~~~r
+> map1
+~~~
+{:.input title="Console"}
+![ ]({{ site.baseurl }}/images/tmap/tmap_show-1.png)
 {:.captioned}
 
 ===
@@ -63,14 +65,14 @@ map1
 Since we saved our thematic map in a variable `map1`, we can recall it and add more map elements, as shown below.
 
 
+
 ~~~r
 map1 +
     tm_style_classic(legend.frame = TRUE) +
     tm_scale_bar(position = c("left", "top"))
 ~~~
-{:.text-document title="worksheet-1.R"}
-
-![plot of chunk tmap_add]({{ site.baseurl }}/images/tmap_add-1.png)
+{:.text-document title="{{ site.handouts[1] }}"}
+![ ]({{ site.baseurl }}/images/tmap/tmap_add-1.png)
 {:.captioned}
 
 Note that the `tm_style_` functions change the overall theme of the plot.

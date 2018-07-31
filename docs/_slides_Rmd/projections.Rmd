@@ -48,7 +48,7 @@ Answer
 Returning to our original problem, we can superpose the two layers by first converting `counties_md` to the same projection as `nlcd`. The `spTransform` function performs this
 operation.
 
-```{r sptransform, title = "worksheet-1.R", fig.keep = "last"}
+```{r sptransform, title = "{{ site.handouts[1] }}", fig.keep = "last"}
 counties_proj <- spTransform(counties_md, 
                              proj4string(nlcd))
 plot(nlcd)

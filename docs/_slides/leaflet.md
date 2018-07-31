@@ -10,6 +10,7 @@ The *leaflet* package is a R interface to the leaflet JavaScript library. It pro
 The `leaflet()` function creates an empty leaflet map to which layers can be added using the pipe (`%>%`) operator. The `addTiles` functions adds a base tiled map; by default, it imports tiles from OpenStreetMap. We center and zoom the map with `setView`. 
 
 
+
 ~~~r
 library(leaflet)
 imap <- leaflet() %>%
@@ -18,7 +19,8 @@ imap <- leaflet() %>%
                     zoom = 7)
 imap
 ~~~
-{:.text-document title="worksheet-1.R"}
+{:.text-document .no-eval title="{{ site.handouts[1] }}"}
+
 
 ===
 
@@ -31,6 +33,7 @@ Switch to the "Viewer" tab in RStudio to see the result.
 To show how leaflet can access open data from various web mapping services (WMS), we add real-time weather radar data from the [Iowa Environmental Mesonet](https://mesonet.agron.iastate.edu/ogc/).
 
 
+
 ~~~r
 imap %>%
     addWMSTiles(
@@ -40,6 +43,7 @@ imap %>%
         attribution = "Weather data © 2012 IEM Nexrad"
     )
 ~~~
-{:.text-document title="worksheet-1.R"}
+{:.text-document .no-eval title="{{ site.handouts[1] }}"}
+
 
 Use the map controls to zoom away from the current location and find ongoing storm events.
