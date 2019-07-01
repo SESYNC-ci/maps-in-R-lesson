@@ -1,47 +1,17 @@
-# Site
+# Build Configuration
 
-title: Maps in R
-handouts:
- - worksheet-1.R
- - worksheet-2.R
- - worksheet-3.R
- - data/cb_2016_md_county_5m
- - data/nlcd_agg.grd
- - data/nlcd_agg.gri
- - data/nlcd_proj.grd
- - data/nlcd_proj.gri
- - data/README.md
-tag: v0.2
-lesson: 7
-instructor: Philippe Marchand
-authors:
- - Philippe Marchand
-
-# Slides
-
-slide_sorter:
-  - intro
-  - shapefile
-  - basicplot
-  - raster
-  - projections
-  - mask
-  - tmap
-  - leaflet
-  - shinyleaflet
-
-#####################################
-# Only modify content above or risk #
-# merge conflicts with upstream.    #
-#####################################
-
-# Style
-
-styleurl: https://cdn.rawgit.com/sesync-ci/lesson-style/v2.0/docs
-reveal: https://cdn.rawgit.com/hakimel/reveal.js/3.5.0
-
-# Jekyll
-
-markdown: kramdown
+markdown: kramdown 
 collections:
-  - slides
+  slides:
+    output: false
+  views:
+    output: true
+    permalink: /:name/
+  archive:
+    output: true
+    permalink: /:year/:month/:day/:title:output_ext
+
+# Asset Location
+
+imageurl: /assets/images/
+styleurl: /assets/css/
