@@ -13,7 +13,7 @@ We start by loading the **raster** package in R and importing a raster file with
 library(raster)
 nlcd <- raster("data/nlcd_agg.grd")
 ~~~
-{:.text-document title="{{ site.handouts[1] }}"}
+{:title="{{ site.data.lesson.handouts[1] }}" .text-document}
 
 
 ===
@@ -25,22 +25,22 @@ A raster is fundamentally a data matrix with associated spatial properties (e.g.
 ~~~r
 > nlcd
 ~~~
-{:.input title="Console"}
+{:title="Console" .input}
 
 
 ~~~
-class       : RasterLayer 
-dimensions  : 2514, 3004, 7552056  (nrow, ncol, ncell)
-resolution  : 150, 150  (x, y)
-extent      : 1394535, 1845135, 1724415, 2101515  (xmin, xmax, ymin, ymax)
-coord. ref. : +proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
-data source : /nfs/public-data/training/nlcd_agg.grd 
-names       : nlcd_2011_landcover_2011_edition_2014_03_31 
-values      : 0, 95  (min, max)
-attributes  :
+class      : RasterLayer 
+dimensions : 2514, 3004, 7552056  (nrow, ncol, ncell)
+resolution : 150, 150  (x, y)
+extent     : 1394535, 1845135, 1724415, 2101515  (xmin, xmax, ymin, ymax)
+crs        : +proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=23 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs 
+source     : /nfs/public-data/training/nlcd_agg.grd 
+names      : nlcd_2011_landcover_2011_edition_2014_03_31 
+values     : 0, 95  (min, max)
+attributes :
         ID      COUNT Red Green Blue Land.Cover.Class Opacity
  from:   0 7854240512   0     0    0     Unclassified       1
- to  : 255          0   0     0    0                        0
+  to : 255          0   0     0    0                        0
 ~~~
 {:.output}
 
@@ -53,7 +53,7 @@ The values in raster cells range from 0 to 255, yet land cover is a categorical 
 ~~~r
 attr_table <- nlcd@data@attributes[[1]]
 ~~~
-{:.text-document title="{{ site.handouts[1] }}"}
+{:title="{{ site.data.lesson.handouts[1] }}" .text-document}
 
 
 Each land cover category has a distinct color specified by the "Red", "Green" and "Blue" columns. 
@@ -66,8 +66,8 @@ We can visualize the whole raster with `plot`.
 ~~~r
 plot(nlcd)
 ~~~
-{:.text-document title="{{ site.handouts[1] }}"}
-![ ]({{ site.baseurl }}/images/raster/raster_plot-1.png)
+{:title="{{ site.data.lesson.handouts[1] }}" .text-document}
+![ ]({% include asset.html path="images/raster/raster_plot-1.png" %})
 {:.captioned}
 
 ===
@@ -78,5 +78,5 @@ At this point, we might want to superpose the county boundaries on top of the ra
 ~~~r
 > plot(counties_md, add = TRUE)
 ~~~
-{:.input title="Console"}
+{:title="Console" .no-eval .input}
 

@@ -14,8 +14,8 @@ For example, the masking layer `nlcd == 81` returns `TRUE` for cells with land c
 pasture <- mask(nlcd, nlcd == 81, maskvalue = FALSE)
 plot(pasture)
 ~~~
-{:.text-document title="{{ site.handouts[1] }}"}
-![ ]({{ site.baseurl }}/images/mask/mask-1.png)
+{:title="{{ site.data.lesson.handouts[1] }}" .text-document}
+![ ]({% include asset.html path="images/mask/mask-1.png" %})
 {:.captioned}
 
 ===

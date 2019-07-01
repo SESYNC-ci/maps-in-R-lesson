@@ -18,7 +18,7 @@ library(rgdal)
 counties_md <- readOGR('data/cb_2016_md_county_5m', 
                        'cb_2016_md_county_5m')
 ~~~
-{:.text-document title="{{ site.handouts[1] }}"}
+{:title="{{ site.data.lesson.handouts[1] }}" .text-document}
 
 
 Note that the first argument to `readOGR` is the path of the shapefile 
@@ -37,7 +37,7 @@ corresponding county.
 ~~~r
 > summary(counties_md)
 ~~~
-{:.input title="Console"}
+{:title="Console" .input}
 
 
 ~~~

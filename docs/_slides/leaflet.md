@@ -19,14 +19,14 @@ imap <- leaflet() %>%
                     zoom = 7)
 imap
 ~~~
-{:.text-document .no-eval title="{{ site.handouts[1] }}"}
+{:title="{{ site.data.lesson.handouts[1] }}" .no-eval .text-document}
 
 
 ===
 
 Switch to the "Viewer" tab in RStudio to see the result.
 
-![leaflet1]({{ site.baseurl }}/images/leaflet1.png)
+![leaflet1]({% include asset.html path="images/leaflet1.png" %})
 
 ===
 
@@ -43,7 +43,7 @@ imap %>%
         attribution = "Weather data © 2012 IEM Nexrad"
     )
 ~~~
-{:.text-document .no-eval title="{{ site.handouts[1] }}"}
+{:title="{{ site.data.lesson.handouts[1] }}" .no-eval .text-document}
 
 
 Use the map controls to zoom away from the current location and find ongoing storm events.

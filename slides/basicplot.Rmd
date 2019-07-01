@@ -5,7 +5,7 @@
 
 To display the spatial features (points, lines or polygons) in a *Spatial* object, you can simply use the `plot` function.
 
-```{r shp_plot, title = "{{ site.handouts[1] }}"}
+```{r shp_plot, handout = 1}
 plot(counties_md)
 ```
 
@@ -17,7 +17,7 @@ by name. Note that we can subset `counties_md` just like a regular data frame.
 
 To add a new layer to an existing plot, use the `add = TRUE` argument.
 
-```{r plot_add, title = "{{ site.handouts[1] }}"}
+```{r plot_add, handout = 1}
 howard <- counties_md[counties_md[["NAME"]] == "Howard", ]
 plot(counties_md)
 plot(howard, col = "red", add = TRUE)
@@ -29,7 +29,7 @@ Other base R functions, such as `text`, always add elements to an existing plot.
 In the code below, note that calling `coordinates` on a polygon object returns
 the center point of each polygon.
 
-```{r plot_text, title = "{{ site.handouts[1] }}"}
+```{r plot_text, handout = 1}
 plot(counties_md)
 plot(howard, col = "red", add = TRUE)
 text(coordinates(counties_md), 

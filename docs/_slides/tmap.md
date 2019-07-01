@@ -16,8 +16,8 @@ Like the `qplot` function in ggplot2, `qtmap` serves to make a quick, less custo
 library(tmap)
 qtm(counties_proj)
 ~~~
-{:.text-document title="{{ site.handouts[1] }}"}
-![ ]({{ site.baseurl }}/images/tmap/qtmap-1.png)
+{:title="{{ site.data.lesson.handouts[1] }}" .text-document}
+![ ]({% include asset.html path="images/tmap/qtmap-1.png" %})
 {:.captioned}
 
 ===
@@ -28,8 +28,8 @@ If the shapefile has associated data, its column names (as quoted strings) can b
 ~~~r
 qtm(counties_proj, fill = "AWATER", text = "NAME")
 ~~~
-{:.text-document title="{{ site.handouts[1] }}"}
-![ ]({{ site.baseurl }}/images/tmap/qtmap_data-1.png)
+{:title="{{ site.data.lesson.handouts[1] }}" .text-document}
+![ ]({% include asset.html path="images/tmap/qtmap_data-1.png" %})
 {:.captioned}
 
 ===
@@ -46,7 +46,7 @@ map1 <- tm_shape(counties_proj) +
             tm_fill("AWATER", title = "Water Area (sq. m)") +
             tm_text("NAME", size = 0.7)
 ~~~
-{:.text-document title="{{ site.handouts[1] }}"}
+{:title="{{ site.data.lesson.handouts[1] }}" .text-document}
 
 
 ===
@@ -56,8 +56,8 @@ map1 <- tm_shape(counties_proj) +
 ~~~r
 > map1
 ~~~
-{:.input title="Console"}
-![ ]({{ site.baseurl }}/images/tmap/tmap_show-1.png)
+{:title="Console" .input}
+![ ]({% include asset.html path="images/tmap/tmap_show-1.png" %})
 {:.captioned}
 
 ===
@@ -71,8 +71,8 @@ map1 +
     tm_style_classic(legend.frame = TRUE) +
     tm_scale_bar(position = c("left", "top"))
 ~~~
-{:.text-document title="{{ site.handouts[1] }}"}
-![ ]({{ site.baseurl }}/images/tmap/tmap_add-1.png)
+{:title="{{ site.data.lesson.handouts[1] }}" .text-document}
+![ ]({% include asset.html path="images/tmap/tmap_add-1.png" %})
 {:.captioned}
 
 Note that the `tm_style_` functions change the overall theme of the plot.

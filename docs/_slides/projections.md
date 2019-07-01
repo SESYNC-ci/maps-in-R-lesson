@@ -9,14 +9,14 @@ In order for two spatial objects to be comparable, they must be represented in t
 
 A **geographic coordinate system** (GCS) represents each point on Earth by two angular coordinates, a longitude and a latitude. In effect, it approximates the irregular "sea level" surface of the Earth (the geoid) by an ellipsoid (a sphere flattened at the poles). The specification of this ellipsoid, or *datum*, has changed over times; current global maps are generally based on the WGS 84 datum, but other systems are in use for older or regional maps. 
 
-![Geoid approximation]({{ site.baseurl }}/images/spheroid.png)
+![Geoid approximation]({% include asset.html path="images/spheroid.png" %})
 
 ===
 
 A **projected coordinated system** associates angular coordinates to points on a plane, in order to produce two-dimensional maps. No such projection can faithfully reproduce the three-dimensional relationship between any set of points on the globe. For example, 
 the Mercator projection (left) preserves angles, which is useful for navigation, but it greatly inflates areas at the poles. The Lambert equal-area projection (right) preserves areas at the cost of shape distortion away from its center.
 
-![Projections]({{ site.baseurl }}/images/proj.png)
+![Projections]({% include asset.html path="images/proj.png" %})
 
 [Source](http://www.perrygeo.com/tissot-indicatrix-examining-the-distortion-of-map-projections.html)
 
@@ -35,7 +35,7 @@ The `counties_md` polygons layer uses a geographic coordinate system ("+proj=lon
 ~~~r
 > proj4string(counties_md)
 ~~~
-{:.input title="Console"}
+{:title="Console" .input}
 
 
 ~~~
@@ -48,7 +48,7 @@ The `counties_md` polygons layer uses a geographic coordinate system ("+proj=lon
 ~~~r
 > proj4string(nlcd)
 ~~~
-{:.input title="Console"}
+{:title="Console" .input}
 
 
 ~~~
@@ -76,6 +76,6 @@ counties_proj <- spTransform(counties_md,
 plot(nlcd)
 plot(counties_proj, add = TRUE)
 ~~~
-{:.text-document title="{{ site.handouts[1] }}"}
-![ ]({{ site.baseurl }}/images/projections/sptransform-1.png)
+{:title="{{ site.data.lesson.handouts[1] }}" .text-document}
+![ ]({% include asset.html path="images/projections/sptransform-1.png" %})
 {:.captioned}

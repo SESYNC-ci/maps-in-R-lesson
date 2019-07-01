@@ -8,7 +8,7 @@ To conclude this presentation of rasters, we introduce the `mask` function. Mask
 ===
 
 For example, the masking layer `nlcd == 81` returns `TRUE` for cells with land cover class 81 (pasture) and `FALSE` otherwise.  With the setting `maskvalue = FALSE`, the code chunk below masks any non-pasture cells and plots the resulting raster.
-```{r mask, fig.keep="last", title = "{{ site.handouts[1] }}"}
+```{r mask, fig.keep="last", handout = 1}
 pasture <- mask(nlcd, nlcd == 81, maskvalue = FALSE)
 plot(pasture)
 ```

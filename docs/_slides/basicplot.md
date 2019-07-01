@@ -10,8 +10,8 @@ To display the spatial features (points, lines or polygons) in a *Spatial* objec
 ~~~r
 plot(counties_md)
 ~~~
-{:.text-document title="{{ site.handouts[1] }}"}
-![ ]({{ site.baseurl }}/images/basicplot/shp_plot-1.png)
+{:title="{{ site.data.lesson.handouts[1] }}" .text-document}
+![ ]({% include asset.html path="images/basicplot/shp_plot-1.png" %})
 {:.captioned}
 
 ===
@@ -29,8 +29,8 @@ howard <- counties_md[counties_md[["NAME"]] == "Howard", ]
 plot(counties_md)
 plot(howard, col = "red", add = TRUE)
 ~~~
-{:.text-document title="{{ site.handouts[1] }}"}
-![ ]({{ site.baseurl }}/images/basicplot/plot_add-1.png)
+{:title="{{ site.data.lesson.handouts[1] }}" .text-document}
+![ ]({% include asset.html path="images/basicplot/plot_add-1.png" %})
 {:.captioned}
 
 ===
@@ -48,8 +48,8 @@ text(coordinates(counties_md),
      labels = counties_md[["NAME"]],
      cex = 0.7)
 ~~~
-{:.text-document title="{{ site.handouts[1] }}"}
-![ ]({{ site.baseurl }}/images/basicplot/plot_text-1.png)
+{:title="{{ site.data.lesson.handouts[1] }}" .text-document}
+![ ]({% include asset.html path="images/basicplot/plot_text-1.png" %})
 {:.captioned}
 
 ===
