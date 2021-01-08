@@ -26,6 +26,21 @@ repository.
  └── Makefile
 ```
 
+The Makefile includes operations for building and publishing lessons. You can call
+the following targets from the command line. In RStudio, the "Build All" button
+runs the default Makefile target.
+
+  - `make preview` (default) to build `docs/_site` locally during development
+  - `make slides` run the `bin/build_*` scripts that populate `docs/_slides`
+  - `make upstream` merge updates made in the upstream `lesson-style` repository
+  - `make archive DATE="yyyy-mm-dd"` freeze the lesson in the `docs/_archive` collection
+  - `make release` zip the handouts for attachment to a GitHub release
+
+Sometimes the "Build All" button in RStudio results in a failure or halted execution.
+This can be due to a caching problem with knitr not reloading packages when it uses
+cached chunks.  The solution is to delete the cache folder in the top-level and 
+rebuild.  
+
 Each lesson repository will include the above files **in addition to** lesson
 metadata and content wholly contained within the following files:
 
@@ -36,17 +51,14 @@ metadata and content wholly contained within the following files:
  │   ├── _data/lesson.yml
  │   └── _slides/
  ├── slides/
+[├── worksheet*.*]
 [├── *.Rproj]
  └─ README.md
 ```
 
-The Makefile includes targets for building and publishing lessons:
-  - `make preview` (default) to build `docs/_site` locally during development
-  - `make slides` run the `bin/build_*` scripts that populate `docs/_slides`
-  - `make upstream` merge updates made in the upstream `lesson-style` repository
-  - `make archive $DATE` freeze the lesson in the `docs/_archive` collection
-  - `make release` zip the handouts for attachment to a GitHub release
-
+Developing a lesson primarily involves writing "slides" (e.g. as Markdown or RMarkdown files),
+creating worksheets that will be distributed along with any data through a handout, and updating
+the metadata in `docs/_data/lesson.yml`.
 
 ## Lesson Content
 
@@ -65,17 +77,19 @@ lesson go automatically to `docs/_archive`.
 
 A `*.Rproj` is optional but convenient for starting an R session with the
 appropriate working directory. A `handouts.Rproj` file will be included in the
-handouts associated with any lesson having a `*.Rproj` file. All handouts
-(including data and worksheets) must be listed in the `docs/_data/lesson.yml`.
+handouts associated with any lesson having a `*.Rproj` file and a .R or .Rmd
+worksheet. All handouts (including data and worksheets) must be listed in the
+`docs/_data/lesson.yml`.
 
 Please **note** the following useful details about how content is rendered:
 
 - Code chunks within a document are rendered to either look like content within
 a text editor or content typed directly into the interpreter/console. The
-console-look is the default. To achieve the editor-look, add `title = "{{
-site.handouts[i] }}"` to the code chunk options, replacing `i` with the
-(zero-indexed) position of the worksheet in the list of handouts.
-- If an expression in a code chunk generates results, it will render as multiple
+console-look is the default. To achieve the editor-look in a Rmd script, add
+`handout = i` to the code chunk options, replacing `i` with the (zero-indexed)
+position of the worksheet in the list of handouts. Alternatively, explicitly set
+the `title="{{ site.data.lesson.handouts[i] }}"` attribute to a Markdown chunk.
+- If an expression in a code chunk generates results, it may render as multiple
 code chunks with the result interspersed. Prefer to only end code chunks with
 expressions that print output or generate plots.
 - Vertical slide breaks are introduced with `===` on a line by itself.
@@ -135,14 +149,26 @@ variables following this template:
 title: ...       # the lesson's title
 handouts:        # a list of handouts, e.g. worksheets and data
  - ...
-tag: ...         # next release version
+tag: ...         # current handout release version
 lesson: ...      # the number of the lesson (for /instructor view)
+lifecycle: alpha # status for lifecycle badge 
+badgecolor: pink # color for lifecycle badge
+warning: true    # whether to include note about lifecycle status
 instructor: ...  # the name of the instructor (for /instructor view)
 authors:         # a list of those writing the lesson
  - ...
-sorter:          # a ordered list of slides (file names without extension)
+sorter:          # an ordered list of slides (file names without extension)
  - ...           # contained in the top-level "slides" folder
 ```
+
+Use the following guide for lifecycle variables:
+
+| lifecycle | badgecolor | warning | 
+|-----------|------------|---------|
+| alpha     | pink       | true    |
+| beta      | blue       | true    |
+| stable    | green      | false   |
+| archived  | gray       | true    |
 
 Files within the "slides" folder become a vertical stack of slides in a
 [Reveal.js] presentation. Stacks are concatenated horizontally in the order
@@ -156,32 +182,97 @@ also possible to build and view locally. The following instructions work with a
 
 From RStudio, choose "Build All" from the "Build" tab. This builds a static
 Jekyll site if any of the content has been updated since the last site build. To
-view the built page in a browser, use the `servr` R package:
+view the built page in a browser under the default port, use the `servr` R package:
 
 ```r
-servr::httw('docs/_site', initpath = 'instructor')
+servr::httw('docs/_site')
 ```
 
-Other valid `initpath` arguments are `course`, `slides`, or nothing.
+If needed, additionally specify an `initpath` value of `'instructor/'`, `'course/'`, or `'slideshow/'`.
 
+If the default port is in use, try a different port, e.g.:
 
-## Versioning and Releases
+```r
+servr::httw('docs/_site', port = 4322)
+```
 
-A lesson should be archived after any event in which it is
-presented&mdash;either in a workshop or à la carte setting. The archive is a
-built (i.e. processed into HTML) page copied into `docs/_archive`. After
-creating an archive, create a release on GitHub using the current `tag` value
-from `docs/_data/lesson.yml`, attach a "handouts.zip" (use `make release`), and
-commit the likely next `tag` value.
+For the site to load correctly, you must update the `RSTUDIO_PROXY`
+environment variable using the next line of code and then force the site to build again.
+
+```r
+Sys.setenv(RSTUDIO_PROXY=rstudioapi::translateLocalUrl('http://127.0.0.1:4322'))
+```
+
+In order to force the site to build again, you may need to delete the entire `docs/_site`
+directory manually. Rebuilding is necessary because the `RSTUDIO_PROXY` environment variable is
+a hash that is generated within your Rstudio session every time Rstudio restarts, and
+it is hard-coded into the file paths for the images and stylesheets. If this is not done, the
+images will appear as "broken links" in the slideshow, and the slides will be formatted incorrectly.
+
+**Important note**: If you display the lesson as a slideshow in the viewer pane using
+`server::httw('docs/_site', initpath = 'slideshow/')`, the images do not display. This is 
+a feature, not a bug! The idea is for the instructor to generate the plots and other images
+and display them in their "Plots" tab, not on the slide.
+
+## Releases and Handouts
+
+*Before teaching a lesson*: Bump the `tag` value in `docs/_data/lesson.yml`. This will be the version number for the GitHub release. 
+Then, create a release on GitHub using the `tag` value as the version with a "handouts.zip" (created through `make release`) attached. 
+To get the file contents for the release description, use `tree` on the unzipped handouts directory. 
+Copy and paste the output of `tree handouts` into the release description.
+
+*After teaching a lesson*: A lesson should be archived after any event in which it is presented&mdash;either in a workshop or à la carte setting. 
+
+Archive the lesson html using the makefile. The archive is built (i.e. processed into HTML) page copied into `docs/_archive`. For example:
+
+`make archive DATE="2020-07-21"` 
+
+To manually archive an html, copy the html from  `_site`  into `_archive`. Add the following header to the html file:
+
+```
+---
+---
+
+```
 
 The archive actually depends on two releases, and both must exist on GitHub:
 - The lesson's repository needs a release corresponding to `tag`.
-- The upstream `lesson-style` repository must have a release matching the string
-found in the `styleurl` value in `docs/_archive.yml`.
+- The upstream `lesson-style` repository must have a release matching ~~the string
+found in the `styleurl` value in~~ `docs/_archive.yml`.
 
 When preparing the first release, be sure to include all data and worksheets in
 a `handouts.zip` binary attachment and use the `tree` command to generate a
 file tree of the zip's contents.
+
+## Lesson Lifecycle
+
+Lesson status should be categorized as Alpha, Beta, Stable, or Archived according to 
+the [lifecycle definitions]. Assign these categories in 3 places: 
+
+1. set variables in the lesson repository `docs/_data/lesson.yml`
+1. copy a badge from below to top of lesson `readme.md`
+1. add or move the lesson repository on the GitHub [curriculum] page.
+
+These assignments are for internal tracking, but the `lesson.yml` will also 
+modify the default lesson view to include the lifecycle badge and a note at 
+the top of the page (if warning: true). 
+
+Additionally, make sure to link/unpublish lessons as follows: 
+
+* For beta and stable lessons, ensure lesson is linked from cyberhelp lessons 
+page by adding a file in `lesson/_posts/`. 
+* For archived lessons, turn off github pages in `-lesson` repository settings
+and add to instructor notes (in lesson `readme.md`) "This lesson is archived" 
+and either "and was replaced with the following lesson: ...", "Active lessons 
+covering similar material include: ... ", or similar. 
+
+**Alpha**  `[![lifecycle](https://img.shields.io/badge/lifecycle-alpha-pink.svg)](https://github.com/SESYNC-ci/sesync-ci.github.io/blob/master/lesson/lesson-lifecycle.md#alpha)`
+
+**Beta** `[![lifecycle](https://img.shields.io/badge/lifecycle-beta-blue.svg)](https://github.com/SESYNC-ci/sesync-ci.github.io/blob/master/lesson/lesson-lifecycle.md#beta)`
+
+**Stable** `[![lifecycle](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://github.com/SESYNC-ci/sesync-ci.github.io/blob/master/lesson/lesson-lifecycle.md#stable)`
+
+**Archived** `[![lifecycle](https://img.shields.io/badge/lifecycle-archived-lightgrey.svg)](https://github.com/SESYNC-ci/sesync-ci.github.io/blob/master/lesson/lesson-lifecycle.md#archived)`
 
 
 ## Working Upstream
@@ -210,3 +301,5 @@ the master branch. The `upstream` commits may not have a shared history with the
 
 [Reveal.js]: http://lab.hakim.se/reveal-js
 [lessons]: http://www.sesync.org/for-you/cyberinfrastructure/training/%C3%A0-la-carte-lessons
+[lifecycle definitions]: https://github.com/SESYNC-ci/sesync-ci.github.io/blob/master/lesson/lesson-lifecycle.md
+[curriculum]: https://github.com/orgs/SESYNC-ci/projects/2
