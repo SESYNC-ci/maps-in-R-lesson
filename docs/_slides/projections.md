@@ -39,7 +39,7 @@ The `counties_md` polygons layer uses a geographic coordinate system ("+proj=lon
 
 
 ~~~
-[1] "+proj=longlat +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0"
+[1] "+proj=longlat +datum=NAD83 +no_defs "
 ~~~
 {:.output}
 

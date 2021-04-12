@@ -68,7 +68,7 @@ Since we saved our thematic map in a variable `map1`, we can recall it and add m
 
 ~~~r
 map1 +
-    tm_style_classic(legend.frame = TRUE) +
+    tm_style("classic", legend.frame = TRUE) +
     tm_scale_bar(position = c("left", "top"))
 ~~~
 {:title="{{ site.data.lesson.handouts[1] }}" .text-document}
@@ -87,4 +87,4 @@ Consult the help file `?tm_fill` to find which argument controls how the scale i
 
 ===
 
-Note that a single thematic map can combine data from multiple vector or raster objects. You can find more tmap examples in the [tmap in a nutshell](https://cran.r-project.org/web/packages/tmap/vignettes/tmap-nutshell.html) R vignette.
+Note that a single thematic map can combine data from multiple vector or raster objects. You can find more tmap examples in the [tmap: get started!](https://cran.r-project.org/web/packages/tmap/vignettes/tmap-getstarted.html) R vignette.
