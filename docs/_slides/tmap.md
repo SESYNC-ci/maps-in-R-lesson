@@ -75,7 +75,7 @@ map1 +
 ![ ]({% include asset.html path="images/tmap/tmap_add-1.png" %})
 {:.captioned}
 
-Note that the `tm_style_` functions change the overall theme of the plot.
+Note that `tm_style` changes the overall theme of the plot.
 
 ===
 
